@@ -1,5 +1,9 @@
 from admin.seats import get_coords_seat, set_seats_empty, get_status_seat
 
+def get_percentage_busy(hall):
+  """Obtener porcentage de la sala ocupado"""
+  pass
+
 def disable_seats(hall):
   """Deshabilita butacas marcándolas con 'X'. Modifica la matriz en el lugar."""
 

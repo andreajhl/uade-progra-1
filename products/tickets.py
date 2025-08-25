@@ -1,6 +1,10 @@
 from admin.seats import get_coords_seat, get_status_seat, set_busy_seat, get_free_seats
 from message.hall import show_hall
 
+def get_consecutive_seats(count_tickets, hall):
+  """Obtiene una opcion de butacas disponibles continuas segun el numero de tickets a comprar"""
+  pass
+
 def ask_ticket_count(hall):
   """Pide la cantidad de entradas, valida que sea número > 0 y no supere las libres."""
 
