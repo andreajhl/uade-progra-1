@@ -1,0 +1,1 @@
+def set_busy_seat(row, col, hall): hall[row][col] = 'X'

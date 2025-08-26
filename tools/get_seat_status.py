@@ -1,0 +1,1 @@
+get_seat_status = lambda seat: None if seat == ' ' else (False if seat == 'X' else True)
