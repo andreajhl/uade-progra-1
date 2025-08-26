@@ -1,5 +1,3 @@
-from message.hall import show_hall
-
 def set_seats_empty(rows, columns):
   """Crea la sala de cine"""
   seats = []
@@ -14,8 +12,6 @@ def get_coords_seat(hall):
   """Retorna las coordenadas de una butaca"""
   total_rows = len(hall)
   total_cols = len(hall[0])
-  
-  show_hall(hall)
 
   while True:
     row = int(input(f"Ingrese la FILA (1-{total_rows}): "))
