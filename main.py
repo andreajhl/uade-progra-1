@@ -21,7 +21,7 @@ def main():
         # el parametro validator_params de custom_input para pasar como parametro free_total a la hora de llamar al 
         # validador y este parametro usa un diccionario, aparte su funcionamiento (args y kwargs) creo que no se vio en clase
         ticket_requested = custom_input(f'Ingrese el número de entradas a comprar (disponibles: {total_free}): ', int,
-            validator=lambda requested: ("La cantidad debe ser mayor que 0.", None) if requested < 1 else (f"No hay suficientes butacas libres. Disponibles: {free_total}.", None) if requested > free_total else (None, requested))
+            validator=lambda requested: ("La cantidad debe ser mayor que 0.", None) if requested < 1 else (f"No hay suficientes butacas libres. Disponibles: {total_free}.", None) if requested > total_free else (None, requested))
 
         purchased = 0
 
