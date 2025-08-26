@@ -2,7 +2,7 @@ from tools.calculate_width import calculate_width
 from interface.show_columns import show_columns
 from interface.show_rows import show_rows
 
-def show_hall(hall):
+def show_hall(hall:list[list]):
   if not hall or not hall[0]:
     print("Sala de Cine (sin butacas)")
     return

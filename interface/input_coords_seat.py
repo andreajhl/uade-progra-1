@@ -1,5 +1,5 @@
 
-def input_coords_seat(hall):
+def input_coords_seat(hall:list[list]):
     """Retorna las coordenadas de una butaca"""
     total_rows = len(hall)
     total_cols = len(hall[0])

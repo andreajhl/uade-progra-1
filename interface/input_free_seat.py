@@ -2,7 +2,7 @@ from interface.show_hall import show_hall
 from interface.input_coords_seat import input_coords_seat
 from tools.get_seat_status import get_seat_status
 
-def input_free_seat(hall):
+def input_free_seat(hall:list[list]):
     """Pide una butaca hasta que sea válida (libre). Devuelve (row, column)"""
     
     while True:

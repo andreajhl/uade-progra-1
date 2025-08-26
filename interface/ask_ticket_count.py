@@ -1,6 +1,6 @@
 from tools.count_free_seats import count_free_seats
 
-def ask_ticket_count(hall):
+def ask_ticket_count(hall:list[list]):
     """Pide la cantidad de entradas, valida que sea número > 0 y no supere las libres."""
 
     while True:

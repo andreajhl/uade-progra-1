@@ -1,4 +1,4 @@
-def calculate_width(hall):
+def calculate_width(hall:list[list]):
   """Devuelve (ancho_butaca, ancho_etiqueta_fila, ancho_total_linea)."""
   PADDING = 2
 

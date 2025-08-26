@@ -1,5 +1,5 @@
 
-def create_halls(rows, columns):
+def create_halls(rows:int, columns:int)->list[list]:
   """Crea la sala de cine"""
   
   seats = []

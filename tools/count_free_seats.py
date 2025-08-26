@@ -1,4 +1,4 @@
-def count_free_seats(hall):
+def count_free_seats(hall:list[list]):
   """Retorna la cantidad de butacas libres."""
   
   free_total = 0

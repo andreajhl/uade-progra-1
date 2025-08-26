@@ -1,5 +1,5 @@
-def disable_seats(hall, row, column):
-    """Deshabilita butacas marcándolas con 'X'. Modifica la matriz en el lugar."""
+def disable_seats(hall:list[list], row:int, column:int):
+    """Marca una butaca como deshabilitada."""
 
     row_label, col_label = row + 1, column + 1
 
