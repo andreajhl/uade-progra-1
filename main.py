@@ -1,5 +1,7 @@
-from tools.init_hall import init_hall
-from interface.ask_ticket_count import ask_ticket_count
+from interface.init_hall import init_hall
+from interface.custom_input import custom_input
+from tools.count_free_seats import count_free_seats
+
 from interface.input_free_seat import input_free_seat
 from tools.set_busy_seat import set_busy_seat
 from interface.show_hall import show_hall
@@ -10,15 +12,20 @@ def main():
     hall = init_hall()
 
     while True:
-        count = ask_ticket_count(hall)
+        total_free = count_free_seats(hall)
+        if total_free == 0:
+            print("No hay mas butacas disponibles.")
+            break
 
-        if count == 0:
-            print("Sala llena")
-            return
+        # quedaria mejor creando una funcion validadora aparte y pasandola como valor en validator pero necesitaria usar 
+        # el parametro validator_params de custom_input para pasar como parametro free_total a la hora de llamar al 
+        # validador y este parametro usa un diccionario, aparte su funcionamiento (args y kwargs) creo que no se vio en clase
+        ticket_requested = custom_input(f'Ingrese el número de entradas a comprar (disponibles: {total_free}): ', int,
+            validator=lambda requested: ("La cantidad debe ser mayor que 0.", None) if requested < 1 else (f"No hay suficientes butacas libres. Disponibles: {free_total}.", None) if requested > free_total else (None, requested))
 
         purchased = 0
 
-        while purchased < count:
+        while purchased < ticket_requested:
             row, column = input_free_seat(hall)
             set_busy_seat(row, column, hall)
 

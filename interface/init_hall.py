@@ -1,3 +1,4 @@
+from interface.custom_input import custom_input
 from tools.create_hall import create_halls
 from tools.disable_seats import disable_seats
 from tools.get_seat_status import get_seat_status
@@ -8,15 +9,19 @@ def init_hall():
   """Crea la sala de cine"""
 
   # Establecer filas y columnas  
-  rows = int(input('Ingresa el numero de filas que tendra la sala: '))
-  columns = int(input('Ingresa el numero de columnas que tendra la sala: '))
+  rows:int = custom_input('Ingresa el numero de filas que tendra la sala: ', int,
+    validator=lambda rows: ("", rows) if rows>=1 else ("Minimo 1 fila", None))
+  
+  columns:int = custom_input('Ingresa el numero de columnas que tendra la sala: ', int,
+    validator=lambda columns: ("", columns) if columns>=1 else ("Minimo 1 columna", None))
 
   hall = create_halls(rows, columns)
 
   # Deshabilitar butacas
   option = None
   while option != 2:
-    option = int(input("¿Desea inhabilitar alguna butaca? (1=Sí, 2=No): "))
+    option:int = custom_input(input_message="¿Desea inhabilitar alguna butaca? (1=Sí, 2=No): ", input_type=int, 
+      validator=lambda inpt: (None, inpt) if 1== inpt or inpt == 2 else ("Opción inválida. Ingrese 1 o 2.", None))
 
     if option == 2:
       print("Finalizó la inhabilitación de butacas.")
@@ -39,5 +44,6 @@ def init_hall():
       continue
 
     disable_seats(hall, row, column)
+    print(f"Butaca F{row_label}-C{col_label} inhabilitada correctamente.")
 
   return hall
