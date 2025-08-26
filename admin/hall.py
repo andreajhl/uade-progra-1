@@ -1,4 +1,5 @@
 from admin.seats import get_coords_seat, set_seats_empty, get_status_seat
+from message.hall import show_hall
 
 def get_percentage_busy(hall):
   """Obtener porcentage de la sala ocupado"""
@@ -18,7 +19,9 @@ def disable_seats(hall):
     if option != 1:
       print("Opción inválida. Ingrese 1 o 2.")
       continue
-
+    
+    show_hall(hall)
+    
     i, j = get_coords_seat(hall)
     row_label, col_label = i + 1, j + 1
 
