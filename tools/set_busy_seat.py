@@ -1,4 +1,4 @@
-from constants import BUSY_SEAT_ICON
+from constants.index import BUSY_SEAT_ICON
 
 
 def set_busy_seat(row: int, col: int, hall: list[list]):

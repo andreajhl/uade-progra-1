@@ -1,4 +1,4 @@
-from constants import SEAT_ICON, BUSY_SEAT_ICON
+from constants.index import SEAT_ICON, BUSY_SEAT_ICON
 from custom_types import CinemaHall
 from interface.custom_input import custom_input
 from interface.user_hall_interface import user_hall_interface

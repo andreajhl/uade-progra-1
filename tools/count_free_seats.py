@@ -1,5 +1,5 @@
 from typing import Callable
-from constants import SEAT_ICON
+from constants.index import SEAT_ICON
 from custom_types import CinemaHall
 
 

@@ -1,4 +1,4 @@
-from constants import DISABLED_SEAT_ICON
+from constants.index import DISABLED_SEAT_ICON
 
 
 def disable_seats(hall: list[list], row: int, column: int):
