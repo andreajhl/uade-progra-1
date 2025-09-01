@@ -1,8 +1,10 @@
+from custom_types import CinemaHall
+
 from tools.calculate_width import calculate_width
 from interface.show_columns import show_columns
 from interface.show_rows import show_rows
 
-def show_hall(hall:list[list]):
+def show_hall(hall:CinemaHall):
   if not hall or not hall[0]:
     print("Sala de Cine (sin butacas)")
     return

@@ -1,41 +1,29 @@
-from interface.init_hall import init_hall
-from interface.custom_input import custom_input
-from tools.count_free_seats import count_free_seats
+from interface.init_interface import init_interface
 
-from interface.input_free_seat import input_free_seat
-from tools.set_busy_seat import set_busy_seat
-from interface.show_hall import show_hall
-
+from interface.admin_interface import admin_interface
+from interface.user_interface import user_interface
 
 def main():
     
-    hall = init_hall()
+    hall, film_name, admin_password = init_interface()
+    
+    all_halls = [hall]
+    all_films = [film_name]
 
     while True:
-        total_free = count_free_seats(hall)
-        if total_free == 0:
-            print("No hay mas butacas disponibles.")
+        all_halls, all_films, admin_password, option = admin_interface(all_halls, all_films, admin_password)
+
+        # entrar interfaz usuario
+        if option == 1:
+            while True:
+                    
+                all_halls, try_admin_password = user_interface(all_halls, all_films)
+
+                if try_admin_password == admin_password:
+                    break
+        # salir
+        elif option == -10:
             break
-
-        # quedaria mejor creando una funcion validadora aparte y pasandola como valor en validator pero necesitaria usar 
-        # el parametro validator_params de custom_input para pasar como parametro free_total a la hora de llamar al 
-        # validador y este parametro usa un diccionario, aparte su funcionamiento (args y kwargs) creo que no se vio en clase
-        ticket_requested = custom_input(f'Ingrese el número de entradas a comprar (disponibles: {total_free}): ', int,
-            validator=lambda requested: ("La cantidad debe ser mayor que 0.", None) if requested < 1 else (f"No hay suficientes butacas libres. Disponibles: {total_free}.", None) if requested > total_free else (None, requested))
-
-        purchased = 0
-
-        while purchased < ticket_requested:
-            row, column = input_free_seat(hall)
-            set_busy_seat(row, column, hall)
-
-            print(f"Seleccionaste la butaca F{row+1}-C{column+1}.")
-        
-            purchased += 1
-
-        print(f"Compra finalizada. Entradas adquiridas: {purchased}.")
-        show_hall(hall)
-
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 from vars import SEAT_ICON
+from custom_types import CinemaHall
 
-def create_halls(rows:int, columns:int)->list[list]:
+def create_halls(rows: int, columns: int) -> CinemaHall:
   """Crea la sala de cine"""
   
   seats = []
