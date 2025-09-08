@@ -11,7 +11,7 @@ def custom_input(
     validator_params: dict = {},
 ) -> Any:
     while True:
-        user_input = input(input_message)
+        user_input = input(input_message).strip()
 
         if input_type == int or input_type == float:
 
@@ -32,7 +32,7 @@ def custom_input(
 
         if input_type == str:
 
-            user_input = input_type(user_input)
+            user_input = input_type(user_input).lower()
             (validation_error_message, user_input) = validator(
                 user_input, **validator_params
             )
