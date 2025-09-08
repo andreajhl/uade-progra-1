@@ -1,0 +1,93 @@
+from interface.view.custom_input import custom_input
+from tools.halls.create_hall import create_halls
+from tools.seats.disable_seats import disable_seats
+from tools.seats.get_seat_status import get_seat_status
+from tools.view.calculate_width import calculate_width
+from custom_types import CinemaHall
+
+from interface.seats.input_coords_seat import input_coords_seat
+
+from interface.view.show_hall import show_hall
+from interface.view.show_columns import show_columns
+from interface.view.show_rows import show_rows
+
+
+def init_hall():
+    """Crea la sala de cine"""
+
+    # Establecer filas y columnas
+    rows: int = custom_input(
+        "Ingresa el numero de filas que tendra la sala: ",
+        int,
+        validator=lambda rows: (None, rows) if rows >= 1 else ("Minimo 1 fila", None),
+    )
+
+    columns: int = custom_input(
+        "Ingresa el numero de columnas que tendra la sala: ",
+        int,
+        validator=lambda columns: (
+            (None, columns) if columns >= 1 else ("Minimo 1 columna", None)
+        ),
+    )
+
+    print()
+
+    hall = create_halls(rows, columns)
+
+    # Deshabilitar butacas
+    option = None
+    while option != 2:
+        show_hall(hall)
+        option: int = custom_input(
+            input_message="¿Desea inhabilitar alguna butaca? (1=Sí, 2=No): ",
+            input_type=int,
+            validator=lambda inpt: (
+                (None, inpt)
+                if 1 == inpt or inpt == 2
+                else ("Opción inválida. Ingrese 1 o 2.", None)
+            ),
+        )
+
+        if option == 2:
+            print("Finalizó la inhabilitación de butacas.")
+            break
+
+        row, column = input_coords_seat(hall)
+        print()
+        row_label = row + 1
+        col_label = column + 1
+
+        seat_status = get_seat_status(hall[row][column])
+
+        if seat_status is None:
+            print(
+                f"La butaca {row_label}{col_label} ya está inhabilitada.", end="\n" * 2
+            )
+            continue
+
+        if seat_status is False:
+            print(
+                f"No se puede inhabilitar: la butaca F{row_label}-C{col_label} está ocupada.",
+                end="\n" * 2,
+            )
+            continue
+
+        disable_seats(hall, row, column)
+        print(
+            f"Butaca F{row_label}-C{col_label} inhabilitada correctamente.",
+            end="\n" * 2,
+        )
+
+    return hall
+
+def show_hall(hall: CinemaHall):
+    if not hall or not hall[0]:
+        print("Sala de Cine (sin butacas)")
+        return
+
+    width_seat, width_row, width_total = calculate_width(hall)
+
+    print("Sala de Cine".center(width_total))
+    show_columns(len(hall[0]), width_row)
+    show_rows(hall, width_seat, width_row)
+
