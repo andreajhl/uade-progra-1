@@ -1,10 +1,7 @@
-from interface.view.custom_input import custom_input
-from interface.view.show_hall import show_hall
+from interface.view.index import custom_input, show_hall
 
-from tools.seats.get_seat_status import get_seat_status
-from tools.view.numbers_into_letters import numbers_into_letters
-from tools.view.letters_into_numbers import letters_into_numbers
-
+from tools.seats.index import get_seat_status
+from tools.view.index import numbers_into_letters, letters_into_numbers
 
 def input_coords_seat(hall: list[list]):
     """Retorna las coordenadas de una butaca"""
@@ -101,7 +98,7 @@ def input_free_seat(hall: list[list]):
 
 
 # no implementada
-from interface.seats.input_coords_seat import input_seat_column
+from interface.seats.index import input_seat_column
 
 
 def input_free_seat_whit_custom_input(hall: list[list]):

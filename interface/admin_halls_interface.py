@@ -1,5 +1,5 @@
 from interface.view.custom_input import custom_input
-from interface.halls.init_hall import init_hall
+from interface.halls.index import init_hall
 
 
 def admin_halls_interface(

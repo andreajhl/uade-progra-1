@@ -1,16 +1,12 @@
 from interface.view.custom_input import custom_input
-from tools.halls.create_hall import create_halls
-from tools.seats.disable_seats import disable_seats
-from tools.seats.get_seat_status import get_seat_status
-from tools.view.calculate_width import calculate_width
+from tools.halls.index import create_halls
+from tools.seats.index import disable_seats, get_seat_status
+from tools.view.index import calculate_width
 from custom_types import CinemaHall
 
-from interface.seats.input_coords_seat import input_coords_seat
+from interface.seats.index import input_coords_seat
 
-from interface.view.show_hall import show_hall
-from interface.view.show_columns import show_columns
-from interface.view.show_rows import show_rows
-
+from interface.view.index import show_hall, show_columns, show_rows
 
 def init_hall():
     """Crea la sala de cine"""

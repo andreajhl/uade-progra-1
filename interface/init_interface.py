@@ -1,7 +1,7 @@
 from time import sleep
 
 
-from interface.halls.init_hall import init_hall
+from interface.halls.index import init_hall
 
 from interface.view.custom_input import custom_input
 
