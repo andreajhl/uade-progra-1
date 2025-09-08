@@ -1,13 +1,13 @@
-from interface.custom_input import custom_input
+from interface.view.custom_input import custom_input
 from typing import Literal
 
-from interface.clear_screen import clear_screen
+from interface.view.index import clear_screen
 
 from interface.admin_halls_interface import admin_halls_interface
 
 
 def admin_interface(
-    all_halls: list[list], all_films: list[str], admin_password: str
+    all_halls: list[list], all_films: list[str]
 ) -> tuple[list[list], list[str], str, Literal[1, -10]]:
     while True:
         print("\n")
@@ -19,7 +19,6 @@ salas totales: {all_halls.__len__()}
               
 1 - Entrar en modo usuario
 2 - Administrar salas
-3 - Cambiar contraseña
 
 -10 - Apagar\n"""
         )
@@ -42,11 +41,8 @@ salas totales: {all_halls.__len__()}
         if admin_input == 2:
             admin_halls_interface(all_halls, all_films)
 
-        if admin_input == 3:
-            admin_password = custom_input("Ingrese la nueva contrase;a")
-
         if admin_input == -10:
             break
 
     clear_screen()
-    return all_halls, all_films, admin_password, admin_input
+    return all_halls, all_films, admin_input

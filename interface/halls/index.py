@@ -1,12 +1,12 @@
-from interface.custom_input import custom_input
-from tools.create_hall import create_halls
-from tools.disable_seats import disable_seats
-from tools.get_seat_status import get_seat_status
+from interface.view.custom_input import custom_input
+from tools.halls.index import create_halls
+from tools.seats.index import disable_seats, get_seat_status
+from tools.view.index import calculate_width
+from custom_types import CinemaHall
 
-from interface.input_coords_seat import input_coords_seat
+from interface.seats.index import input_coords_seat
 
-from interface.show_hall import show_hall
-
+from interface.view.index import show_hall, show_columns, show_rows
 
 def init_hall():
     """Crea la sala de cine"""
@@ -75,3 +75,15 @@ def init_hall():
         )
 
     return hall
+
+def show_hall(hall: CinemaHall):
+    if not hall or not hall[0]:
+        print("Sala de Cine (sin butacas)")
+        return
+
+    width_seat, width_row, width_total = calculate_width(hall)
+
+    print("Sala de Cine".center(width_total))
+    show_columns(len(hall[0]), width_row)
+    show_rows(hall, width_seat, width_row)
+
