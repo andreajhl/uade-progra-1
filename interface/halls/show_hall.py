@@ -1,8 +1,8 @@
 from custom_types import CinemaHall
 
-from tools.calculate_width import calculate_width
-from interface.show_columns import show_columns
-from interface.show_rows import show_rows
+from tools.view.calculate_width import calculate_width
+from interface.view.show_columns import show_columns
+from interface.view.show_rows import show_rows
 
 
 def show_hall(hall: CinemaHall):

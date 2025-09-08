@@ -1,11 +1,11 @@
-from interface.custom_input import custom_input
-from tools.create_hall import create_halls
-from tools.disable_seats import disable_seats
-from tools.get_seat_status import get_seat_status
+from interface.view.custom_input import custom_input
+from tools.halls.create_hall import create_halls
+from tools.seats.disable_seats import disable_seats
+from tools.seats.get_seat_status import get_seat_status
 
-from interface.input_coords_seat import input_coords_seat
+from interface.seats.input_coords_seat import input_coords_seat
 
-from interface.show_hall import show_hall
+from interface.view.show_hall import show_hall
 
 
 def init_hall():

@@ -1,6 +1,6 @@
-from interface.show_hall import show_hall
-from interface.input_coords_seat import input_coords_seat
-from tools.get_seat_status import get_seat_status
+from interface.view.show_hall import show_hall
+from interface.seats.input_coords_seat import input_coords_seat
+from tools.seats.get_seat_status import get_seat_status
 
 
 def input_free_seat(hall: list[list]):
@@ -25,7 +25,7 @@ def input_free_seat(hall: list[list]):
 
 
 # no implementada
-from interface.input_coords_seat import input_seat_column
+from interface.seats.input_coords_seat import input_seat_column
 
 
 def input_free_seat_whit_custom_input(hall: list[list]):

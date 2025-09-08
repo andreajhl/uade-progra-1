@@ -1,5 +1,5 @@
 import string
-from tools.numbers_into_letters import numbers_into_letters
+from tools.view.numbers_into_letters import numbers_into_letters
 
 
 def show_columns(total_columns: int, width_row: int):

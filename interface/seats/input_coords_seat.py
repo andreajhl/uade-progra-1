@@ -1,7 +1,7 @@
 import string
-from interface.custom_input import custom_input
-from tools.numbers_into_letters import numbers_into_letters
-from tools.letters_into_numbers import letters_into_numbers
+from interface.view.custom_input import custom_input
+from tools.view.numbers_into_letters import numbers_into_letters
+from tools.view.letters_into_numbers import letters_into_numbers
 
 
 def input_coords_seat(hall: list[list]):
@@ -28,7 +28,7 @@ def input_coords_seat(hall: list[list]):
 
 
 # no implementado
-from interface.custom_input import custom_input
+from interface.view.custom_input import custom_input
 
 
 def input_seat_row(hall: list[list]):

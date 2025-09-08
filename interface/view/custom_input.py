@@ -11,34 +11,34 @@ def custom_input(
     validator_params: dict = {},
 ) -> Any:
     while True:
-        usr_input = input(input_message)
+        user_input = input(input_message)
 
         if input_type == int or input_type == float:
 
-            if not usr_input.isnumeric():
+            if not user_input.isnumeric():
                 print(error_message)
                 continue
 
-            usr_input = input_type(usr_input)
-            (validation_error_message, usr_input) = validator(
-                usr_input, **validator_params
+            user_input = input_type(user_input)
+            (validation_error_message, user_input) = validator(
+                user_input, **validator_params
             )
 
             if validation_error_message != None:
                 print(validation_error_message)
                 continue
 
-            return usr_input
+            return user_input
 
         if input_type == str:
 
-            usr_input = input_type(usr_input)
-            (validation_error_message, usr_input) = validator(
-                usr_input, **validator_params
+            user_input = input_type(user_input)
+            (validation_error_message, user_input) = validator(
+                user_input, **validator_params
             )
 
             if validation_error_message != None:
                 print(validation_error_message)
                 continue
 
-            return usr_input
+            return user_input

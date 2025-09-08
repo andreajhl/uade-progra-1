@@ -1,5 +1,5 @@
-from interface.custom_input import custom_input
-from interface.init_hall import init_hall
+from interface.view.custom_input import custom_input
+from interface.halls.init_hall import init_hall
 
 
 def admin_halls_interface(
@@ -16,10 +16,10 @@ salas totales: {all_halls.__len__()}
 3 - Actualizar sala
 4 - Eliminar sala
 
--9 - Atras\n"""
+9 - Atras\n"""
         )
 
-        options_tuple = (1, 2, 3, 4, -9)
+        options_tuple = (1, 2, 3, 4, 9)
         admin_input = custom_input(
             "opcion: ",
             int,
@@ -44,5 +44,5 @@ salas totales: {all_halls.__len__()}
         if admin_input == 4:
             pass
 
-        if admin_input == -9:
+        if admin_input == 9:
             return all_halls, all_films
