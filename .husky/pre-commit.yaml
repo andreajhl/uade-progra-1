@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: black
+        name: black (system)
+        entry: python3 -m black
+        language: system
+        types: [python]
+        args: ["--line-length=88"]
