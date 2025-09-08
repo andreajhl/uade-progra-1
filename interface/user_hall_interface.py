@@ -5,7 +5,7 @@ from interface.view.custom_input import custom_input
 from interface.seats.index import input_free_seat
 from tools.seats.index import set_busy_seat
 from interface.view.index import show_hall
-from interface.view.clear_screen import clear_screen
+from interface.view.index import clear_screen
 
 
 def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):

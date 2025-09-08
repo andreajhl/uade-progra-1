@@ -1,4 +1,5 @@
-from interface.view.index import custom_input, show_hall
+from interface.view.index import show_hall
+from interface.view.custom_input import custom_input
 
 from tools.seats.index import get_seat_status
 from tools.view.index import numbers_into_letters, letters_into_numbers

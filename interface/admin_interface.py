@@ -1,7 +1,7 @@
 from interface.view.custom_input import custom_input
 from typing import Literal
 
-from interface.view.clear_screen import clear_screen
+from interface.view.index import clear_screen
 
 from interface.admin_halls_interface import admin_halls_interface
 

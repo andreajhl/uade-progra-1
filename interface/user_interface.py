@@ -2,7 +2,7 @@ from constants.index import SEAT_ICON, BUSY_SEAT_ICON
 from custom_types import CinemaHall
 from interface.view.custom_input import custom_input
 from interface.user_hall_interface import user_hall_interface
-from interface.view.clear_screen import clear_screen
+from interface.view.index import clear_screen
 from interface.admin_halls_interface import admin_halls_interface
 from tools.seats.index import count_free_seats
 from tools.maximum_consecutive_in_matrix import maximum_consecutive_in_matrix

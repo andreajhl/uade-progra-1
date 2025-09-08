@@ -5,7 +5,7 @@ from interface.halls.index import init_hall
 
 from interface.view.custom_input import custom_input
 
-from interface.view.clear_screen import clear_screen
+from interface.view.index import clear_screen
 
 
 def init_interface():

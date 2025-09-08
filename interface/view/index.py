@@ -1,7 +1,6 @@
 import os
 from custom_types import CinemaHall
 from tools.view.index import numbers_into_letters, calculate_width
-from interface.view.index import show_columns, show_rows
 
 def show_columns(total_columns: int, width_row: int):
     print("Columns", end=" ")
