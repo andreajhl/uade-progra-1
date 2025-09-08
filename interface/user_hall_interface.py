@@ -3,7 +3,7 @@ from custom_types import CinemaHall
 from interface.view.custom_input import custom_input
 
 from interface.seats.input_free_seat import input_free_seat
-from tools.seats.set_busy_seat import set_busy_seat
+from tools.seats.index import set_busy_seat
 from interface.view.show_hall import show_hall
 from interface.view.clear_screen import clear_screen
 

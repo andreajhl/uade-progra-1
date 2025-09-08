@@ -1,6 +1,6 @@
 from interface.view.show_hall import show_hall
 from interface.seats.input_coords_seat import input_coords_seat
-from tools.seats.get_seat_status import get_seat_status
+from tools.seats.index import get_seat_status
 
 
 def input_free_seat(hall: list[list]):

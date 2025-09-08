@@ -1,7 +1,7 @@
 from interface.view.custom_input import custom_input
-from tools.halls.create_hall import create_halls
-from tools.seats.disable_seats import disable_seats
-from tools.seats.get_seat_status import get_seat_status
+from tools.halls.index import create_halls
+from tools.seats.index import disable_seats
+from tools.seats.index import get_seat_status
 
 from interface.seats.input_coords_seat import input_coords_seat
 

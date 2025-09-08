@@ -1,6 +1,6 @@
 from custom_types import CinemaHall
 
-from tools.view.calculate_width import calculate_width
+from tools.view.index import calculate_width
 from interface.view.show_columns import show_columns
 from interface.view.show_rows import show_rows
 

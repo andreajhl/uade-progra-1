@@ -1,7 +1,7 @@
 import string
 from interface.view.custom_input import custom_input
-from tools.view.numbers_into_letters import numbers_into_letters
-from tools.view.letters_into_numbers import letters_into_numbers
+from tools.view.index import numbers_into_letters
+from tools.view.index import letters_into_numbers
 
 
 def input_coords_seat(hall: list[list]):
