@@ -5,7 +5,8 @@ from interface.user_hall_interface import user_hall_interface
 from interface.view.index import clear_screen
 from interface.admin_halls_interface import admin_halls_interface
 from tools.seats.index import count_free_seats
-from tools.maximum_consecutive_in_matrix import maximum_consecutive_in_matrix
+from tools.seats.index import maximum_consecutive_in_matrix
+
 
 def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
     while True:
