@@ -1,4 +1,7 @@
 # 📘 Proyecto `uade-progra-1`
+<p align="center">
+<img src= "./CinePlayLogo.png" alt="Cine Play Logo" width="200"/>
+</p>
 
 ---
 ## Integrantes
