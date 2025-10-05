@@ -3,26 +3,39 @@ from interface.view.custom_input import custom_input
 
 from tools.seats.index import get_seat_status
 from tools.view.index import numbers_into_letters, letters_into_numbers
+from interface.view.custom_input import custom_input
+from tools.validate_a_Z_string import validate_a_Z_string
 
 def input_coords_seat(hall: list[list]):
     """Retorna las coordenadas de una butaca"""
     total_rows = len(hall)
     total_cols = len(hall[0])
+    
+    def col_validator(col:str):
+        col= col.upper()
+        is_dec = col.isdecimal()
+        are_letters = validate_a_Z_string(col)
 
-    while True:
-        row = int(input(f"Ingrese la FILA (1-{total_rows}): "))
-        if row < 1 or row > total_rows:
-            print("Fila fuera de rango.")
-            continue
+        if not (is_dec or are_letters):
+            print("valor invalido")
+            return (ValueError("Valor invalido."), None)
 
-        col = input(
-            f"Ingrese la COLUMNA (A-{numbers_into_letters(total_cols - 1)}) para la fila {row}: "
-        ).upper()
-        col_index = letters_into_numbers(col)
+        col_index = int(col) - 1 if is_dec else letters_into_numbers(col.upper())
 
         if col_index + 1 > total_cols:
-            print("Columna fuera de rango.")
-            continue
+            return (IndexError("Columna fuera de rango."), None)
+
+        return (None, col_index)
+
+    while True:
+
+        row = custom_input(f"Ingrese la FILA (1-{total_rows}): ", 
+            int, 
+            validator=lambda row: (IndexError("Fila fuera de rango."), None) if row < 1 or row > total_rows else (None, row))
+
+        col_index = custom_input(f"Ingrese la COLUMNA (A-{numbers_into_letters(total_cols - 1)}) para la fila {row}: ", 
+            str, 
+            validator=col_validator)
 
         return (row - 1, col_index)
 
