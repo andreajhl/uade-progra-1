@@ -7,6 +7,15 @@ from tools.seats.index import set_busy_seat
 from interface.view.index import show_hall
 from interface.view.index import clear_screen
 
+def find_first_free_seats(hall: CinemaHall, cantidad: int):
+    libres = []
+    for i, fila in enumerate(hall):
+        for j, asiento in enumerate(fila):
+            if not asiento:  # Suponiendo que False es libre
+                libres.append((i, j))
+                if len(libres) == cantidad:
+                    return libres
+    return libres
 
 def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
     clear_screen()
@@ -25,6 +34,29 @@ def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
             )
         ),
     )
+
+    first_free_seats = find_first_free_seats(hall, ticket_requested)
+    if len(first_free_seats) < ticket_requested:
+        print("No hay suficientes butacas libres.")
+        return
+
+    print("Las siguientes butacas están disponibles para usted:")
+    for fila, col in first_free_seats:
+        print(f"F{fila+1}-C{col+1}", end=" ")
+    print()
+    
+    aceptar = custom_input(
+        "¿Desea aceptar estas butacas? (s/n): ",
+        str,
+        validator=lambda x: (None, x.lower()) if x.lower() in ["s", "n"] else ("Ingrese 's' o 'n'.", None)
+    )
+
+    if aceptar == "s":
+        for fila, col in first_free_seats:
+            set_busy_seat(fila, col, hall)
+        print(f"Compra finalizada. Entradas adquiridas: {ticket_requested}.")
+        show_hall(hall)
+        return
 
     purchased = 0
 
