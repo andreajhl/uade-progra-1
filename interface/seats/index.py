@@ -2,12 +2,12 @@ from custom_types import CinemaHall
 
 from interface.view.index import show_hall
 from interface.view.custom_input import custom_input
+from interface.seats.index import input_seat_column
 
 from tools.seats.index import get_seat_status
 from tools.view.index import numbers_into_letters, letters_into_numbers
 
 from constants.index import SEAT_ICON
-
 
 def input_coords_seat(hall: list[list]):
     """Retorna las coordenadas de una butaca"""
@@ -30,11 +30,6 @@ def input_coords_seat(hall: list[list]):
             continue
 
         return (row - 1, col_index)
-
-
-# no implementado
-from interface.view.custom_input import custom_input
-
 
 def input_seat_row(hall: list[list]):
     total_rows = len(hall)
@@ -102,11 +97,6 @@ def input_free_seat(hall: list[list]):
             continue
 
         return row, column
-
-
-# no implementada
-from interface.seats.index import input_seat_column
-
 
 def input_free_seat_whit_custom_input(hall: list[list]):
     """Pide una butaca hasta que sea válida (libre). Devuelve (row, column)"""
