@@ -62,7 +62,7 @@ if __name__ == "__main__":
             finally:
                 if not shut_down:
                     print("El programa se reiniciara.")
-                    sleep(2)
+                    input("Enter para continuar")
     else:
         # Si quisieramos controlar los posibles errores en modo desarrollo
         # seria fundamental usar la libreria estandar traceback para mostrar mas informacion sobre el error
