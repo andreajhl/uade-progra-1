@@ -4,6 +4,7 @@ from interface.user_interface import user_interface
 
 
 def handle_exception(e: Exception) -> None:
+    """Manejo de excepciones (Keyboard interrupt, TypeErrr, ValueError,Error inesperado)"""
     match e:
         case KeyboardInterrupt():
             print("\nInterrupción del usuario.")

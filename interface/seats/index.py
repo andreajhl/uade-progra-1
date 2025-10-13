@@ -9,6 +9,7 @@ from tools.view.index import numbers_into_letters, letters_into_numbers
 
 from constants.index import SEAT_ICON
 
+
 def input_coords_seat(hall: list[list]):
     """Retorna las coordenadas de una butaca"""
     total_rows = len(hall)
@@ -30,6 +31,7 @@ def input_coords_seat(hall: list[list]):
             continue
 
         return (row - 1, col_index)
+
 
 def input_seat_row(hall: list[list]):
     total_rows = len(hall)
@@ -98,13 +100,13 @@ def input_free_seat(hall: list[list]):
 
         return row, column
 
+
 def input_free_seat_whit_custom_input(hall: list[list]):
     """Pide una butaca hasta que sea válida (libre). Devuelve (row, column)"""
 
     while True:
         show_hall(hall)
 
-        # falta completar, validar si el usuario cancela
         row = input_seat_column(hall)
 
         row, column = input_coords_seat(hall)
@@ -123,16 +125,17 @@ def input_free_seat_whit_custom_input(hall: list[list]):
 
 
 def find_first_free_seats(hall: CinemaHall, cantidad: int):
+    """Busca la primer butaca vacia (Hall, cantidad de butacas), devuelve una lista con los asientos libres (free_seats)"""
     free_seats = []
     for i in range(len(hall)):
         fila = hall[i]
-        
+
         for j in range(len(fila)):
             asiento = hall[i][j]
-            
+
             if asiento == SEAT_ICON:
                 free_seats.append((i, j))
-                
+
                 if len(free_seats) == cantidad:
                     return free_seats
     return free_seats

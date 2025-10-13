@@ -9,6 +9,7 @@ from interface.admin_halls_interface import admin_halls_interface
 def admin_interface(
     all_halls: list[list], all_films: list[str]
 ) -> tuple[list[list], list[str], str, Literal[1, -10]]:
+    """Despliega menu para entrar en modo usuario o administrar las Salas"""
     while True:
         print("\n")
 

@@ -2,13 +2,17 @@ import os
 from custom_types import CinemaHall
 from tools.view.index import numbers_into_letters, calculate_width
 
+
 def show_columns(total_columns: int, width_row: int):
+    """Muestra por consola las columnas de la sala de cine (cantidad total de columnas, cantidad de fila)"""
     print("Columns", end=" ")
     for c in range(total_columns):
         print(f"{numbers_into_letters(c):>{width_row + 5}}", end="")
     print()
-    
+
+
 def show_rows(hall: CinemaHall, width_seat: int, width_row: int):
+    """Muestra por consola las filas de la sala de cine (Cinema Hall, cantidad de columnas, cantidad de fila)"""
     rows = len(hall)
     columns = len(hall[0])
 
@@ -17,8 +21,10 @@ def show_rows(hall: CinemaHall, width_seat: int, width_row: int):
         for c in range(columns):
             print(f"{hall[f][c]:>{width_seat + 2}}", end=" ")
         print()
-    
+
+
 def show_hall(hall: CinemaHall):
+    """Muesta en pantalla el Hall (Hall)"""
     if not hall or not hall[0]:
         print("Sala de Cine (sin butacas)")
         return
@@ -29,7 +35,9 @@ def show_hall(hall: CinemaHall):
     show_columns(len(hall[0]), width_row)
     show_rows(hall, width_seat, width_row)
 
+
 def clear_screen():
+    """Limpia consola"""
     # Para sistemas Windows
     if os.name == "nt":
         _ = os.system("cls")

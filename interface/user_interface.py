@@ -9,6 +9,7 @@ from tools.seats.index import maximum_consecutive_in_matrix
 
 
 def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
+    """Despliega menu de usuario solicita (todas las salas, todas las peliculas), permite comprar entradas para la pelicula deseada y pasar al modo administrador"""
     while True:
         print(
             """\tBienvenido.

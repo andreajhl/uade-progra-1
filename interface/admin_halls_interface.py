@@ -5,6 +5,7 @@ from interface.halls.index import init_hall
 def admin_halls_interface(
     all_halls: list[list], all_films: list[str]
 ) -> tuple[list[list], list[str]]:
+    """Despliega la intefaz del administrado, permite crear salas, info salsa, actualizar salas, eliminar salas"""
     while True:
         print(
             f"""\tPanel de administración.

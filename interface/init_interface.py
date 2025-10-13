@@ -9,6 +9,7 @@ from interface.view.index import clear_screen
 
 
 def init_interface():
+    """Inicializar interfaz global"""
     clear_screen()
 
     print("\tBienvenido.", end="\n" * 2)
