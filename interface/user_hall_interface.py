@@ -37,7 +37,7 @@ def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
     for fila, col in first_free_seats:
         set_seat_status(fila, col, hall, RESERVED_SEAT_ICON)
     show_hall(hall)
-    # TODO: cambiar la seleccion a numerica
+    
     aceptar = custom_input(
         "¿Desea aceptar estas butacas? (1 = si/ 2 = no): ",
         int,
