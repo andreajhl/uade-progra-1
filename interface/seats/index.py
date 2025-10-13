@@ -141,5 +141,6 @@ def find_first_free_seats(hall: CinemaHall, cantidad: int):
             if asiento == SEAT_ICON:
                 free_seats.append((i, j))
                 if len(free_seats) == cantidad:
+                    # TODO:no romper el ciclo con return
                     return free_seats
     return free_seats

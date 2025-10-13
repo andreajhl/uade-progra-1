@@ -4,7 +4,7 @@ from interface.view.custom_input import custom_input
 from interface.user_hall_interface import user_hall_interface
 from interface.view.index import clear_screen
 from interface.admin_halls_interface import admin_halls_interface
-from tools.seats.index import count_free_seats
+from tools.seats.index import count_seats
 from tools.seats.index import maximum_consecutive_in_matrix
 
 
@@ -20,8 +20,8 @@ Sala \t Pelicula \t Espacios \t Espacios consecutivos maximos"""
 
         halls_indexes = range(all_films_names.__len__())
         for hall_index in halls_indexes:
-            total_free_seats = count_free_seats(all_halls[hall_index])
-            total_number_of_available_seats = count_free_seats(
+            total_free_seats = count_seats(all_halls[hall_index])
+            total_number_of_available_seats = count_seats(
                 all_halls[hall_index], lambda seat: seat in [SEAT_ICON, BUSY_SEAT_ICON]
             )
             print(
@@ -48,7 +48,7 @@ Sala \t Pelicula \t Espacios \t Espacios consecutivos maximos"""
                 user_hall_interface(
                     all_halls[hall_selected_index],
                     all_films_names[hall_selected_index],
-                    count_free_seats(all_halls[hall_selected_index]),
+                    count_seats(all_halls[hall_selected_index]),
                 )
 
             clear_screen()
