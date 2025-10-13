@@ -136,6 +136,7 @@ def find_first_free_seats(hall: CinemaHall, cantidad: int):
     free_seats = []
     for i in range(len(hall)):
         fila = hall[i]
+        
         for j in range(len(fila)):
             asiento = hall[i][j]
             
