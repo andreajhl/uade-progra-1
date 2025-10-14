@@ -15,11 +15,12 @@ def custom_input(
 
         if input_type == int or input_type == float:
 
-            if not user_input.isnumeric():
+            try:  
+                user_input = input_type(user_input)
+            except Exception:
                 print(error_message)
                 continue
 
-            user_input = input_type(user_input)
             (validation_error_message, user_input) = validator(
                 user_input, **validator_params
             )

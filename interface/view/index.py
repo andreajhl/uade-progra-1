@@ -23,6 +23,16 @@ def show_rows(hall: CinemaHall, width_seat: int, width_row: int):
         print()
 
 
+def clear_screen():
+    """Limpia consola"""
+    # Para sistemas Windows
+    if os.name == "nt":
+        _ = os.system("cls")
+    # Para sistemas Unix (Linux, macOS)
+    else:
+        _ = os.system("clear")
+
+
 def show_hall(hall: CinemaHall):
     """Muesta en pantalla el Hall (Hall)"""
     if not hall or not hall[0]:
@@ -34,13 +44,3 @@ def show_hall(hall: CinemaHall):
     print("Sala de Cine".center(width_total))
     show_columns(len(hall[0]), width_row)
     show_rows(hall, width_seat, width_row)
-
-
-def clear_screen():
-    """Limpia consola"""
-    # Para sistemas Windows
-    if os.name == "nt":
-        _ = os.system("cls")
-    # Para sistemas Unix (Linux, macOS)
-    else:
-        _ = os.system("clear")
