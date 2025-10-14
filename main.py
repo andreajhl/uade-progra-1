@@ -6,6 +6,7 @@ from interface.admin_interface import admin_interface
 from interface.user_interface import user_interface
 from interface.view.index import clear_screen
 
+
 def main():
     hall, film_name = init_interface()
     all_halls = [hall]
@@ -14,7 +15,7 @@ def main():
     while True:
         all_halls, all_films, option = admin_interface(all_halls, all_films)
 
-        if option == -1:
+        if option == 1:
             while True:
                 result = user_interface(all_halls, all_films)
                 if isinstance(result, tuple) and len(result) == 2:
@@ -25,10 +26,11 @@ def main():
                 else:
                     all_halls = result
                     break
-        elif option == -9:
+        elif option == 9:
             break
         else:
             print("Opción no reconocida.")
+
 
 if __name__ == "__main__":
 
@@ -44,8 +46,12 @@ if __name__ == "__main__":
                 clear_screen()
                 print("\nInterrupción del usuario.")
                 print("Volver a apretar cotl + c para finalizar.")
-                shut_down = True if input("9 para salir, cualquier cosa para reinicial:") == "9" else False
-            
+                shut_down = (
+                    True
+                    if input("9 para salir, cualquier cosa para reinicial:") == "9"
+                    else False
+                )
+
             except TypeError:
                 clear_screen()
                 print("Tipo de dato inválido")
