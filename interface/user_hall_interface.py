@@ -11,6 +11,7 @@ from constants.index import SEAT_ICON, RESERVED_SEAT_ICON
 
 
 def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
+    """Depliega el menu para compra de entradas solicita (hall, nombre de la pelicula, cantidad de butacas Libres)"""
     clear_screen()
 
     print(film_name)

@@ -11,7 +11,8 @@ from interface.halls.index import init_hall
 
 def admin_interface(
     all_halls: list[list], all_films_names: list[str]
-) -> tuple[list[list], list[str], str, Literal[-1, -9]]:
+) -> tuple[list[list], list[str], str, Literal[1, 9]]:
+    """Despliega menu para entrar en modo usuario o administrar las Salas"""
     while True:
         print("\tPanel de administración.")
         show_halls(all_halls, all_films_names)

@@ -3,7 +3,7 @@ from custom_types import CinemaHall
 
 
 def create_halls(rows: int, columns: int) -> CinemaHall:
-    """Crea la sala de cine"""
+    """Crea la sala de cine, solicita (Filas y columnas)"""
 
     seats = []
 

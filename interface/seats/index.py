@@ -126,7 +126,6 @@ def input_free_seat_whit_custom_input(hall: list[list]):
     while True:
         show_hall(hall)
 
-        # falta completar, validar si el usuario cancela
         row = input_seat_column(hall)
 
         row, column = input_coords_seat(hall)
@@ -145,6 +144,7 @@ def input_free_seat_whit_custom_input(hall: list[list]):
 
 
 def find_first_free_seats(hall: CinemaHall, cantidad: int):
+    """Busca la primer butaca vacia (Hall, cantidad de butacas), devuelve una lista con los asientos libres (free_seats)"""
     free_seats = []
     for i in range(len(hall)):
         fila = hall[i]
