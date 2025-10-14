@@ -2,9 +2,7 @@ from time import sleep
 
 
 from interface.halls.index import init_hall
-
 from interface.view.custom_input import custom_input
-
 from interface.view.index import clear_screen
 
 

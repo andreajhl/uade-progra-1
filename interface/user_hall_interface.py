@@ -37,7 +37,7 @@ def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
     for fila, col in first_free_seats:
         set_seat_status(fila, col, hall, RESERVED_SEAT_ICON)
     show_hall(hall)
-    
+
     aceptar = custom_input(
         "¿Desea aceptar estas butacas? (1 = si/ 2 = no): ",
         int,
@@ -49,7 +49,9 @@ def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
     if aceptar == 1:
         for fila, col in first_free_seats:
             set_seat_status(fila, col, hall)
+
         print(f"Compra finalizada. Entradas adquiridas: {ticket_requested}.")
+
         show_hall(hall)
         return
     else:
