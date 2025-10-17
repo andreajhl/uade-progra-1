@@ -1,36 +1,25 @@
-from typing import Callable
-from custom_types import CinemaHall
 from constants.index import DISABLED_SEAT_ICON, BUSY_SEAT_ICON, SEAT_ICON
 
 
-def count_seats(
-    hall: CinemaHall, custom_filter: Callable = lambda seat: seat == SEAT_ICON
-):
-    """Retorna la cantidad de butacas libres."""
-
-    free_total = 0
-    for row in hall:
-        for seat in row:
-            if custom_filter(seat):
-                free_total += 1
-    return free_total
-
-
-"""Cambiar a formato lambda"""
+count_seats = lambda hall, custom_filter=lambda seat: seat == SEAT_ICON: sum(
+    1 for row in hall for seat in row if custom_filter(seat)
+)
+"""Retorna la cantidad de butacas libres."""
 
 
 def set_seat_status(row: int, col: int, hall: list[list], icon=BUSY_SEAT_ICON):
+    """Cambia de estado la butaca del asiento solicitado (fila, columna, icon(estado al que quiero modificar))"""
     hall[row][col] = icon
 
 
 get_seat_status = lambda seat: (
     None if seat == DISABLED_SEAT_ICON else (False if seat == BUSY_SEAT_ICON else True)
 )
-
-"""Cambiar a formato lambda"""
+"""Devuelve el estado de la butaca indicada (None si desabilitada, False si ocupado, True si libre)"""
 
 
 def maximum_consecutive_in_matrix(matrix: list[list], element) -> int:
+    """Devuelve el numero de veces que se repite consecutivamente el elemento en la matriz (Matriz, Elemento)"""
     count = 0
     result = 0
 

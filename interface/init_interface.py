@@ -2,13 +2,12 @@ from time import sleep
 
 
 from interface.halls.index import init_hall
-
 from interface.view.custom_input import custom_input
-
 from interface.view.index import clear_screen
 
 
 def init_interface():
+    """Inicializar interfaz global"""
     clear_screen()
 
     print("\tBienvenido.", end="\n" * 2)
