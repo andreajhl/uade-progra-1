@@ -15,7 +15,7 @@ def main():
     while True:
         all_halls, all_films, option = admin_interface(all_halls, all_films)
 
-        if option == 1:
+        if option == -1:
             while True:
                 result = user_interface(all_halls, all_films)
                 if isinstance(result, tuple) and len(result) == 2:
@@ -26,7 +26,7 @@ def main():
                 else:
                     all_halls = result
                     break
-        elif option == 9:
+        elif option == -9:
             break
         else:
             print("Opción no reconocida.")
