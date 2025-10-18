@@ -15,7 +15,7 @@ def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
         halls_indexes = range(all_halls.__len__())
 
         user_input = custom_input(
-            "Elija una sala (9 para entrar en modo administrador): ",
+            "Elija una sala (-9 para entrar en modo administrador): ",
             int,
             error_message="Opcion invalida.",
             validator=lambda option: (
@@ -25,7 +25,7 @@ def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
             ),
         )
 
-        if user_input == 9:
+        if user_input == -9:
             clear_screen()
             return all_halls
 
