@@ -20,7 +20,7 @@ def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
             error_message="Opcion invalida.",
             validator=lambda option: (
                 ("Opcion invalida.", None)
-                if not (option - 1 in halls_indexes) and option != 9
+                if not (option - 1 in halls_indexes) and option != -9
                 else (None, option)
             ),
         )
