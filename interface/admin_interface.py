@@ -8,6 +8,7 @@ from interface.admin_hall_interface import admin_hall_interface
 
 from interface.halls.index import init_hall
 
+from tools.save_data import save_data
 
 def admin_interface(
     all_halls: list[list], all_films_names: list[str]
@@ -42,6 +43,7 @@ salas totales: {all_halls.__len__()}
         if admin_input == -2:
             all_halls.append(init_hall())
             all_films_names.append(custom_input("En esta sala se proyectara: ", str))
+            save_data(all_halls, all_films_names)
             clear_screen()
             continue
 

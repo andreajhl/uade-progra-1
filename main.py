@@ -5,12 +5,16 @@ from interface.init_interface import init_interface
 from interface.admin_interface import admin_interface
 from interface.user_interface import user_interface
 from interface.view.index import clear_screen
-
+from tools.load_data import load_data
+from tools.save_data import save_data
 
 def main():
-    hall, film_name = init_interface()
-    all_halls = [hall]
-    all_films = [film_name]
+    all_halls, all_films = load_data()
+
+    if not all_halls:    
+        hall, film_name = init_interface()
+        all_halls = [hall]
+        all_films = [film_name]
 
     while True:
         all_halls, all_films, option = admin_interface(all_halls, all_films)
@@ -27,8 +31,10 @@ def main():
                     all_halls = result
                     break
         elif option == -9:
+            save_data(all_halls, all_films)
             break
         else:
+            input("Nunca entra aca o si???? v2")
             print("Opción no reconocida.")
 
 

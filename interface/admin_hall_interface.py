@@ -4,11 +4,12 @@ from interface.view.index import show_hall
 from interface.seats.index import input_coords_seat
 from constants.index import DISABLED_SEAT_ICON, SEAT_ICON, BUSY_SEAT_ICON
 from interface.view.index import clear_screen
-
+from tools.save_data import save_data
 
 def admin_hall_interface(
     all_halls: list[CinemaHall], all_films_names: list[str], hall_id: int
 ) -> tuple[list[CinemaHall], list[str]]:
+    need_save = False
     while True:
         hall = all_halls[hall_id]
         film_name = all_films_names[hall_id]
@@ -24,7 +25,7 @@ def admin_hall_interface(
 
 4 - Eliminar sala
 
-9 - Atras\n"""
+9 - Guardar y salir\n"""
         )
 
         options_tuple = (1, 2, 3, 4, 9)
@@ -63,12 +64,13 @@ def admin_hall_interface(
             else:
                 hall[row][column] = DISABLED_SEAT_ICON
 
+            need_save = True
             clear_screen()
             continue
-
         if admin_input == 2:
             all_films_names[hall_id] = input("En esta sala se proyectará:")
 
+            need_save = True
             clear_screen()
             continue
 
@@ -78,13 +80,17 @@ def admin_hall_interface(
                     if hall[row_id][col_id] == BUSY_SEAT_ICON:
                         hall[row_id][col_id] = SEAT_ICON
 
+            need_save = True
             clear_screen()
             continue
 
         if admin_input == 4:
             all_halls.pop(hall_id)
             all_films_names.pop(hall_id)
-            return all_halls, all_films_names
+            need_save = True
+            continue
 
         if admin_input == 9:
+            if need_save:
+                save_data(all_halls, all_films_names)
             return all_halls, all_films_names
