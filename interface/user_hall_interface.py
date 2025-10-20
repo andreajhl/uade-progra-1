@@ -40,10 +40,10 @@ def user_hall_interface(hall: CinemaHall, film_name: str, total_free: int):
     show_hall(hall)
 
     aceptar = custom_input(
-        "¿Desea aceptar estas butacas? (1 = si/ 2 = no): ",
+        "¿Desea aceptar estas butacas? (1=Sí, 2=No): ",
         int,
         validator=lambda x: (
-            (None, x) if x in [1, 2] else ("Ingrese '1 = si' o '2 = no'.", None)
+            (None, x) if x in [1, 2] else ("Ingrese '1 = Sí', '2 = No'.", None)
         ),
     )
 

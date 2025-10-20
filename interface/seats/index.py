@@ -144,17 +144,23 @@ def input_free_seat_whit_custom_input(hall: list[list]):
 
 
 def find_first_free_seats(hall: CinemaHall, cantidad: int):
-    """Busca la primer butaca vacia (Hall, cantidad de butacas), devuelve una lista con los asientos libres (free_seats)"""
-    free_seats = []
+    """Busca la primera secuencia de 'cantidad' asientos libres consecutivos en el hall.
+    Devuelve una lista con las coordenadas [(fila, col), ...] o una lista vacía si no hay suficientes.
+    """
+
     for i in range(len(hall)):
         fila = hall[i]
+        consecutive_seats = []
 
         for j in range(len(fila)):
             asiento = hall[i][j]
 
             if asiento == SEAT_ICON:
-                free_seats.append((i, j))
+                consecutive_seats.append((i, j))
 
-                if len(free_seats) == cantidad:
-                    return free_seats
-    return free_seats
+                if len(consecutive_seats) == cantidad:
+                    return consecutive_seats
+            else:
+                consecutive_seats = []
+
+    return []
