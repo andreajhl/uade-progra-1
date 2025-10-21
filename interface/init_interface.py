@@ -4,7 +4,7 @@ from time import sleep
 from interface.halls.index import init_hall
 from interface.view.custom_input import custom_input
 from interface.view.index import clear_screen
-
+from tools.save_data import save_data
 
 def init_interface():
     """Inicializar interfaz global"""
@@ -23,7 +23,8 @@ def init_interface():
     print()
 
     film_name: str = custom_input("En esta sala se proyectara: ", str)  #
-    print()
+
+    save_data([hall], [film_name])
 
     clear_screen()
 

@@ -5,6 +5,7 @@ from interface.view.index import clear_screen
 from interface.show_halls import show_halls
 from tools.seats.index import count_seats, count_seats
 
+from tools.save_data import save_data
 
 def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
     """Despliega menu de usuario solicita (todas las salas, todas las peliculas), permite comprar entradas para la pelicula deseada y pasar al modo administrador"""
@@ -15,17 +16,17 @@ def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
         halls_indexes = range(all_halls.__len__())
 
         user_input = custom_input(
-            "Elija una sala (9 para entrar en modo administrador): ",
+            "Elija una sala (-9 para entrar en modo administrador): ",
             int,
             error_message="Opcion invalida.",
             validator=lambda option: (
                 ("Opcion invalida.", None)
-                if not (option - 1 in halls_indexes) and option != 9
+                if not (option - 1 in halls_indexes) and option != -9
                 else (None, option)
             ),
         )
 
-        if user_input == 9:
+        if user_input == -9:
             clear_screen()
             return all_halls
 
@@ -36,5 +37,6 @@ def user_interface(all_halls: list[CinemaHall], all_films_names: list[str]):
                 all_films_names[hall_selected_index],
                 count_seats(all_halls[hall_selected_index]),
             )
+            save_data(all_halls, all_films_names)
 
         clear_screen()
