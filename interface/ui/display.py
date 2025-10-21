@@ -19,13 +19,30 @@ películas totales: {movies_count}
 
 1 - Agregar función de cine""")
     
-    # Show movie selection options if movies exist
+    # Show edit option only if movies exist
     if movies_count > 0:
-        print("\nPelículas disponibles para editar:")
-        for i in range(movies_count):
-            print(f"{i + 3} - Editar película {i + 1}")
+        print("2 - Editar película")
     
     print("9 - Salir\n")
+
+
+def display_movie_selection_menu(movies_db) -> None:
+    """Displays movie selection menu for editing."""
+    from tools.movies.index import get_all_movie_ids, get_movie_by_id
+    
+    print("\n" + "="*50)
+    print("         SELECCIONAR PELÍCULA PARA EDITAR")
+    print("="*50)
+    
+    movie_ids = get_all_movie_ids(movies_db)
+    for i, movie_id in enumerate(movie_ids, 1):
+        movie = get_movie_by_id(movies_db, movie_id)
+        if movie:
+            title = movie["title"][:30] + "..." if len(movie["title"]) > 30 else movie["title"]
+            print(f"{i} - {title} ({movie['category']}, {movie['classification']})")
+    
+    print("9 - Volver al menú anterior")
+    print("="*50)
 
 
 def display_movies_overview(movies_db) -> None:

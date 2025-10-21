@@ -10,12 +10,31 @@ from custom_types import CinemaHall
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
     """Gets admin menu choice for movies system with validation."""
-    valid_options = [1, 2, 9]  # 1=User mode, 2=Create movie, 9=Exit
+    valid_options = [1, 9]  # 1=Create movie, 9=Exit
+    
     if movies_count > 0:
-        valid_options.extend(range(3, movies_count + 3))  # Movie selection options
+        valid_options.append(2)  # 2=Edit movie (shows submenu)
     
     return custom_input(
         "Elija una opción: ",
+        int,
+        error_message="Opción inválida.",
+        validator=lambda option: (
+            ("Opción inválida.", None)
+            if option not in valid_options
+            else (None, option)
+        ),
+    )
+
+
+def get_movie_selection_choice(movies_count: int) -> int:
+    """Gets movie selection choice for editing with validation."""
+    valid_options = [9]  # 9=Back
+    if movies_count > 0:
+        valid_options.extend(range(1, movies_count + 1))  # Movie selection options
+    
+    return custom_input(
+        "Seleccione una película: ",
         int,
         error_message="Opción inválida.",
         validator=lambda option: (

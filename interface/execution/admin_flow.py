@@ -15,11 +15,13 @@ from tools.movies.index import (
 from interface.ui.display import (
     display_admin_menu_header,
     display_admin_menu_options,
-    display_movies_overview
+    display_movies_overview,
+    display_movie_selection_menu
 )
 from interface.ui.input import (
     get_admin_menu_choice_movies,
-    get_complete_movie_data
+    get_complete_movie_data,
+    get_movie_selection_choice
 )
 from tools.json.index import save_json
 
@@ -40,22 +42,22 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
         
         # Handle menu options
         if admin_choice == 1:
+            # Create new movie
             movies_db = _handle_create_movie(movies_db)
             data_changed = True
             continue
             
-        if admin_choice == 9:
-            break
+        elif admin_choice == 2:
+            # Handle edit movie submenu
+            result = _handle_edit_movie_selection(movies_db)
+            if result is not None:
+                movies_db, changed = result
+                if changed:
+                    data_changed = True
+            continue
             
-        # Handle movie selection for editing
-        movie_ids = get_all_movie_ids(movies_db)
-        if admin_choice > 2 and admin_choice <= len(movie_ids) + 2:
-            movie_index = admin_choice - 3  # Adjust for menu offset
-            if movie_index < len(movie_ids):
-                clear_screen()
-                movie_id = movie_ids[movie_index]
-                movies_db = _handle_movie_management(movies_db, movie_id)
-                data_changed = True
+        elif admin_choice == 9:
+            break
 
     # Save data only if changes were made
     if data_changed:
@@ -112,3 +114,25 @@ def _handle_movie_management(movies_db: MoviesDatabase, movie_id: str) -> Movies
     # Use the hall admin interface for movie management
     from interface.execution.hall_admin_flow import run_hall_admin_interface
     return run_hall_admin_interface(movies_db, movie_id)
+
+
+def _handle_edit_movie_selection(movies_db: MoviesDatabase) -> tuple[MoviesDatabase, bool] | None:
+    """Handles the movie selection submenu for editing."""
+    while True:
+        clear_screen()
+        display_movie_selection_menu(movies_db)
+        
+        movies_count = get_movies_count(movies_db)
+        choice = get_movie_selection_choice(movies_count)
+        
+        if choice == 9:
+            return None  # Go back to main menu
+            
+        # Handle movie selection
+        movie_ids = get_all_movie_ids(movies_db)
+        if 1 <= choice <= len(movie_ids):
+            movie_index = choice - 1
+            movie_id = movie_ids[movie_index]
+            clear_screen()
+            movies_db = _handle_movie_management(movies_db, movie_id)
+            return movies_db, True  # Return with changes made
