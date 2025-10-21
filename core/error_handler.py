@@ -3,7 +3,7 @@ Error handling for the cinema application.
 Provides different error handling strategies for development and deployment modes.
 """
 
-from tools.display.hall_display import clear_screen
+from tools.display.index import clear_screen
 
 
 def handle_keyboard_interrupt() -> bool:

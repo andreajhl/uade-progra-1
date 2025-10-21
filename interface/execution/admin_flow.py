@@ -5,8 +5,8 @@ Updated to use MoviesDatabase instead of separate lists.
 """
 
 from custom_types import MoviesDatabase
-from tools.display.hall_display import clear_screen
-from tools.movies.movie_utils import (
+from tools.display.index import clear_screen
+from tools.movies.index import (
     get_movies_count,
     add_movie_to_database,
     get_all_movie_ids,
@@ -21,6 +21,7 @@ from interface.ui.input import (
     get_admin_menu_choice_movies,
     get_complete_movie_data
 )
+from tools.json import save_json
 
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
@@ -28,6 +29,8 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     Main execution flow for admin interface using MoviesDatabase.
     Handles movie management instead of separate halls and films lists.
     """
+    data_changed = False  # Flag to track if any changes were made
+    
     while True:
         # Display current state
         _show_admin_menu_state(movies_db)
@@ -38,6 +41,7 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
         # Handle menu options
         if admin_choice == 2:
             movies_db = _handle_create_movie(movies_db)
+            data_changed = True
             continue
             
         if admin_choice in (1, 9):
@@ -51,7 +55,16 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
                 clear_screen()
                 movie_id = movie_ids[movie_index]
                 movies_db = _handle_movie_management(movies_db, movie_id)
+                data_changed = True
 
+    # Save data only if changes were made
+    if data_changed:
+        try:
+            save_json(movies_db)
+            print("💾 Datos guardados exitosamente")
+        except Exception as e:
+            print(f"⚠️ Error al guardar datos: {e}")
+    
     clear_screen()
     return movies_db
 

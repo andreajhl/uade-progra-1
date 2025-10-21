@@ -3,7 +3,7 @@ UI input functions for getting user input.
 Contains only input logic with validation.
 """
 
-from tools.input.custom_input import custom_input
+from tools.input.index import custom_input
 from tools.seats.input_utils import input_coords_seat, input_free_seat
 from custom_types import CinemaHall
 

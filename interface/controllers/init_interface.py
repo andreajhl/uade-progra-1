@@ -6,9 +6,9 @@ Entry point for the application, coordinates main menu and user type selection.
 from custom_types import CinemaHall, MoviesDatabase
 from interface.controllers.admin_interface import admin_interface
 from interface.controllers.user_interface import user_interface
-from tools.input.custom_input import custom_input
-from tools.display.hall_display import clear_screen
-from tools.movies.movie_utils import create_empty_movies_database
+from tools.input.index import custom_input
+from tools.display.index import clear_screen
+from tools.movies.index import create_empty_movies_database
 
 
 def init_interface() -> None:
@@ -54,7 +54,7 @@ def init_interface() -> None:
             print("\n👤 Accediendo a la Interface de Usuario...")
             
             # Check if there are any movies available
-            from tools.movies.movie_utils import get_movies_count
+            from tools.movies.index import get_movies_count
             if get_movies_count(movies_db) == 0:
                 print("\n" + "="*50)
                 print("🎭 No hay películas disponibles en este momento")

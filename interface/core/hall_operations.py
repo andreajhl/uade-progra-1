@@ -11,8 +11,8 @@ from tools.seats.index import get_seat_status, set_seat_status
 
 def create_new_hall() -> CinemaHall:
     """Creates a new cinema hall."""
-    from tools.input.custom_input import custom_input
-    from tools.display.hall_display import show_hall
+    from tools.input.index import custom_input
+    from tools.display.index import show_hall
     from tools.seats.input_utils import input_coords_seat
     
     # Get hall dimensions

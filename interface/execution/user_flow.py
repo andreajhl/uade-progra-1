@@ -5,8 +5,8 @@ Updated to use MoviesDatabase instead of separate lists.
 """
 
 from custom_types import MoviesDatabase
-from tools.display.hall_display import clear_screen
-from tools.movies.movie_utils import (
+from tools.display.index import clear_screen
+from tools.movies.index import (
     get_movies_count,
     get_all_movie_ids,
     get_movie_by_id

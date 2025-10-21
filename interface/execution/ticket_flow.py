@@ -4,8 +4,8 @@ Coordinates between UI input/display and core business logic.
 """
 
 from custom_types import CinemaHall, MoviesDatabase
-from tools.display.hall_display import clear_screen, show_hall
-from tools.movies.movie_utils import get_movie_by_id
+from tools.display.index import clear_screen, show_hall
+from tools.movies.index import get_movie_by_id
 from interface.core.ticket_operations import (
     validate_ticket_request,
     find_consecutive_available_seats,

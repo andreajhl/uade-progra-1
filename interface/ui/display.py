@@ -4,7 +4,7 @@ Contains only display logic without business logic or user input.
 """
 
 from custom_types import CinemaHall
-from tools.display.hall_display import show_hall
+from tools.display.index import show_hall
 
 
 def display_admin_menu_header() -> None:
@@ -31,7 +31,7 @@ películas totales: {movies_count}
 
 def display_movies_overview(movies_db) -> None:
     """Displays overview of all movies in the database."""
-    from tools.movies.movie_utils import get_all_movie_ids, get_movie_by_id
+    from tools.movies.index import get_all_movie_ids, get_movie_by_id
     
     print("Catálogo de Películas:")
     print("\nID \t Título \t\t Categoría \t Clasificación \t Horario")

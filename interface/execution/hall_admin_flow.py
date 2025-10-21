@@ -4,8 +4,9 @@ Coordinates between UI input/display and core business logic.
 """
 
 from custom_types import CinemaHall, MoviesDatabase
-from tools.display.hall_display import clear_screen
-from tools.movies.movie_utils import get_movie_by_id, delete_movie
+from tools.display.index import clear_screen
+from tools.movies.index import get_movie_by_id, delete_movie
+from tools.json import save_json
 from interface.core.hall_operations import (
     change_seat_status,
     clear_all_occupied_seats
@@ -29,11 +30,13 @@ def run_hall_admin_interface(movies_db: MoviesDatabase, movie_id: str) -> Movies
     Main execution flow for hall administration.
     Broken down from original all-powerful function.
     """
+    data_changed = False  # Flag to track if any changes were made
+    
     while True:
         movie = get_movie_by_id(movies_db, movie_id)
         if not movie:
             print(f"❌ Película con ID {movie_id} no encontrada")
-            return movies_db
+            break
             
         hall = movie["hall"]
         film_name = movie["title"]
@@ -55,8 +58,10 @@ def run_hall_admin_interface(movies_db: MoviesDatabase, movie_id: str) -> Movies
                 "classification": movie["classification"],
                 "schedule": movie["schedule"]
             }
+            data_changed = True
         elif admin_choice == 2:
             movies_db = _handle_film_name_change(movies_db, movie_id)
+            data_changed = True
         elif admin_choice == 3:
             _handle_clear_occupied_seats(hall)
             # Update the movie in the database with modified hall
@@ -67,16 +72,28 @@ def run_hall_admin_interface(movies_db: MoviesDatabase, movie_id: str) -> Movies
                 "classification": movie["classification"],
                 "schedule": movie["schedule"]
             }
+            data_changed = True
         elif admin_choice == 4:
             # Delete the movie from the database
             movies_db = delete_movie(movies_db, movie_id)
             print(f"\n🗑️ Película '{film_name}' eliminada exitosamente")
+            data_changed = True
             input("\n📌 Presione Enter para continuar...")
-            return movies_db
+            break
         elif admin_choice == 9:
-            return movies_db
+            break
             
         clear_screen()
+    
+    # Save data only if changes were made
+    if data_changed:
+        try:
+            save_json(movies_db)
+            print("💾 Datos guardados exitosamente")
+        except Exception as e:
+            print(f"⚠️ Error al guardar datos: {e}")
+    
+    return movies_db
 
 
 def _show_hall_admin_state(hall: CinemaHall, film_name: str) -> None:
