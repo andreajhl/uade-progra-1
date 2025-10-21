@@ -4,7 +4,7 @@ Contains only input logic with validation.
 """
 
 from tools.input.index import custom_input
-from tools.seats.input_utils import input_coords_seat, input_free_seat
+from tools.seats.index import get_coords_seat, get_free_seat
 from custom_types import CinemaHall
 
 
@@ -219,12 +219,12 @@ def get_seat_acceptance_choice() -> int:
 
 def get_seat_coordinates(hall: CinemaHall) -> tuple[int, int]:
     """Gets seat coordinates input."""
-    return input_coords_seat(hall)
+    return get_coords_seat(hall)
 
 
 def get_free_seat_selection(hall: CinemaHall) -> tuple[int, int]:
     """Gets free seat selection input."""
-    return input_free_seat(hall)
+    return get_free_seat(hall)
 
 
 def get_complete_movie_data() -> dict[str, str]:

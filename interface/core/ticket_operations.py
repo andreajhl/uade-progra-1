@@ -5,8 +5,7 @@ Contains pure business logic without UI concerns.
 
 from custom_types import CinemaHall
 from constants.index import SEAT_ICON, BUSY_SEAT_ICON, RESERVED_SEAT_ICON
-from tools.seats.index import count_seats, set_seat_status
-from tools.seats.input_utils import find_first_free_seats
+from tools.seats.index import count_seats, set_seat_status, get_first_free_seats
 
 
 def get_available_seats_count(hall: CinemaHall) -> int:
@@ -30,7 +29,7 @@ def validate_ticket_request(available_seats: int, requested_tickets: int) -> tup
 
 def find_consecutive_available_seats(hall: CinemaHall, ticket_count: int) -> list[tuple[int, int]]:
     """Finds consecutive available seats for the requested number of tickets."""
-    return find_first_free_seats(hall, ticket_count)
+    return get_first_free_seats(hall, ticket_count)
 
 
 def has_enough_consecutive_seats(found_seats: list, requested_count: int) -> bool:

@@ -13,7 +13,7 @@ def create_new_hall() -> CinemaHall:
     """Creates a new cinema hall."""
     from tools.input.index import custom_input
     from tools.display.index import show_hall
-    from tools.seats.input_utils import input_coords_seat
+    from tools.seats.index import get_coords_seat
     
     # Get hall dimensions
     rows: int = custom_input(
@@ -51,7 +51,7 @@ def create_new_hall() -> CinemaHall:
             print("Finalizó la inhabilitación de butacas.")
             break
 
-        row, column = input_coords_seat(hall)
+        row, column = get_coords_seat(hall)
         print()
         row_label = row + 1
         col_label = column + 1
