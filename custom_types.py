@@ -2,9 +2,8 @@ from typing import Literal, List, TypedDict
 from constants.index import DISABLED_SEAT_ICON, BUSY_SEAT_ICON, SEAT_ICON
 
 # Seat and hall types
-SeatState = Literal[" ", "X", 0]
-CinemaHall = List[List[SeatState]]
 SeatState = Literal[DISABLED_SEAT_ICON, BUSY_SEAT_ICON, SEAT_ICON]
+CinemaHall = List[List[SeatState]]
 
 # Movie-related types
 MovieCategory = Literal["A", "B", "C", "D"]
