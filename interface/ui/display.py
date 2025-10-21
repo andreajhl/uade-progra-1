@@ -17,8 +17,7 @@ def display_admin_menu_options(movies_count: int) -> None:
     print(f"""
 películas totales: {movies_count}
 
-1 - Entrar en modo usuario
-2 - Crear película""")
+1 - Agregar función de cine""")
     
     # Show movie selection options if movies exist
     if movies_count > 0:
@@ -26,7 +25,7 @@ películas totales: {movies_count}
         for i in range(movies_count):
             print(f"{i + 3} - Editar película {i + 1}")
     
-    print("9 - Apagar\n")
+    print("9 - Salir\n")
 
 
 def display_movies_overview(movies_db) -> None:

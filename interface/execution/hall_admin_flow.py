@@ -6,7 +6,7 @@ Coordinates between UI input/display and core business logic.
 from custom_types import CinemaHall, MoviesDatabase
 from tools.display.index import clear_screen
 from tools.movies.index import get_movie_by_id, delete_movie
-from tools.json import save_json
+from tools.json.index import save_json
 from interface.core.hall_operations import (
     change_seat_status,
     clear_all_occupied_seats
@@ -87,11 +87,7 @@ def run_hall_admin_interface(movies_db: MoviesDatabase, movie_id: str) -> Movies
     
     # Save data only if changes were made
     if data_changed:
-        try:
-            save_json(movies_db)
-            print("💾 Datos guardados exitosamente")
-        except Exception as e:
-            print(f"⚠️ Error al guardar datos: {e}")
+        save_json(movies_db)
     
     return movies_db
 

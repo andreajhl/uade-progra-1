@@ -13,6 +13,7 @@ from tools.movies.index import (
 )
 from interface.ui.display import display_user_welcome, display_movies_overview
 from interface.ui.input import get_user_menu_choice_movies
+from tools.json.index import save_json
 
 
 def run_user_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
@@ -20,6 +21,8 @@ def run_user_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     Main execution flow for user interface using MoviesDatabase.
     Handles movie selection for ticket purchasing.
     """
+    data_changed = False  # Flag to track if any changes were made
+    
     while True:
         # Display user menu
         _show_user_menu_state(movies_db)
@@ -29,8 +32,7 @@ def run_user_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
         
         # Handle admin mode switch
         if user_choice == 9:
-            clear_screen()
-            return movies_db
+            break
             
         # Handle movie selection
         movie_ids = get_all_movie_ids(movies_db)
@@ -38,8 +40,16 @@ def run_user_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
             movie_index = user_choice - 1
             movie_id = movie_ids[movie_index]
             movies_db = _handle_movie_selection(movies_db, movie_id)
+            data_changed = True
             
         clear_screen()
+    
+    # Save data only if changes were made
+    if data_changed:
+        save_json(movies_db)
+    
+    clear_screen()
+    return movies_db
 
 
 def _show_user_menu_state(movies_db: MoviesDatabase) -> None:

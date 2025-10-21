@@ -21,7 +21,7 @@ from interface.ui.input import (
     get_admin_menu_choice_movies,
     get_complete_movie_data
 )
-from tools.json import save_json
+from tools.json.index import save_json
 
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
@@ -39,12 +39,12 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
         admin_choice = get_admin_menu_choice_movies(get_movies_count(movies_db))
         
         # Handle menu options
-        if admin_choice == 2:
+        if admin_choice == 1:
             movies_db = _handle_create_movie(movies_db)
             data_changed = True
             continue
             
-        if admin_choice in (1, 9):
+        if admin_choice == 9:
             break
             
         # Handle movie selection for editing
@@ -59,11 +59,7 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
 
     # Save data only if changes were made
     if data_changed:
-        try:
-            save_json(movies_db)
-            print("💾 Datos guardados exitosamente")
-        except Exception as e:
-            print(f"⚠️ Error al guardar datos: {e}")
+        save_json(movies_db)
     
     clear_screen()
     return movies_db

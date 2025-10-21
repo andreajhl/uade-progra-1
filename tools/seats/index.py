@@ -2,10 +2,9 @@
 from custom_types import CinemaHall
 from tools.display.index import show_hall
 from tools.input.index import custom_input
-from tools.seats.index import get_seat_status
 from tools.view.index import numbers_into_letters, letters_into_numbers
 from tools.validate_a_Z_string import validate_a_Z_string
-from constants.index import SEAT_ICON, DISABLED_SEAT_ICON, BUSY_SEAT_ICON, SEAT_ICON
+from constants.index import SEAT_ICON, DISABLED_SEAT_ICON, BUSY_SEAT_ICON
 
 
 count_seats = lambda hall, custom_filter=lambda seat: seat == SEAT_ICON: sum(
