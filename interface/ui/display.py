@@ -2,7 +2,7 @@
 
 from custom_types import CinemaHall
 from tools.display.index import show_hall
-
+from constants.index import FILM_CATEGORY, FILM_CLASSIFICATION
 
 def display_admin_menu_header() -> None:
     """Muestra encabezado del panel de administrador."""
@@ -17,11 +17,31 @@ películas totales: {movies_count}
 1 - Agregar función de cine""")
     
     if movies_count > 0:
-        print("\nPelículas disponibles para editar:")
-        for i in range(movies_count):
-            print(f"{i + 3} - Editar película {i + 1}")
+        print("2 - Editar película")
     
     print("9 - Salir\n")
+
+
+def display_movie_selection_menu(movies_db) -> None:
+    """Muestra el menú de selección de películas para editar."""
+    from tools.movies.index import get_all_movie_ids, get_movie_by_id
+    
+    print("\n" + "="*50)
+    print("         SELECCIONAR PELÍCULA PARA EDITAR")
+    print("="*50)
+    
+    movie_ids = get_all_movie_ids(movies_db)
+    for i, movie_id in enumerate(movie_ids, 1):
+        movie = get_movie_by_id(movies_db, movie_id)
+        if movie:
+            title = movie["title"][:30] + "..." if len(movie["title"]) > 30 else movie["title"]
+            category = FILM_CATEGORY[movie['category']]
+            classification = FILM_CLASSIFICATION[movie['classification']]
+            
+            print(f"{i} - {title} ({category}, {classification})")
+    
+    print("9 - Volver al menú anterior")
+    print("="*50)
 
 
 def display_movies_overview(movies_db) -> None:
@@ -29,15 +49,18 @@ def display_movies_overview(movies_db) -> None:
     from tools.movies.index import get_all_movie_ids, get_movie_by_id
     
     print("Catálogo de Películas:")
-    print("\nID \t Título \t\t Categoría \t Clasificación \t Horario")
-    print("-" * 80)
+    print("\nID \t Título \t\t Categoría \t\t\t Clasificación \t\t\t\t Horario")
+    print("-" * 120)
     
     movie_ids = get_all_movie_ids(movies_db)
     for i, movie_id in enumerate(movie_ids, 1):
         movie = get_movie_by_id(movies_db, movie_id)
         if movie:
             title = movie["title"][:15] + "..." if len(movie["title"]) > 15 else movie["title"]
-            print(f"{i} \t {title:<15} \t {movie['category']} \t\t {movie['classification']} \t\t {movie['schedule']}")
+            category = FILM_CATEGORY[movie['category']]
+            classification = FILM_CLASSIFICATION[movie['classification']]
+
+            print(f"{i} \t {title:<15} \t {category} \t\t {classification} \t\t {movie['schedule']}")
     
     if not movie_ids:
         print("No hay películas disponibles.")

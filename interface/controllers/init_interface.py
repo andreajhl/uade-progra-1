@@ -13,7 +13,7 @@ def init_interface() -> None:
     clear_screen()
     
     print("🎬" * 20)
-    print("    BIENVENIDO AL SISTEMA DE CINE")
+    print("    BIENVENIDO A CINEPLAY")
     print("🎬" * 20)
     
     movies_db: MoviesDatabase = create_empty_movies_database()
@@ -59,6 +59,6 @@ def init_interface() -> None:
             movies_db = user_interface(movies_db)
             
         elif option == 3:
-            print("\n👋 ¡Gracias por usar el Sistema de Cine!")
+            print("\n👋 ¡Gracias por usar CinePlay!")
             print("🎬 ¡Hasta la próxima!")
             break

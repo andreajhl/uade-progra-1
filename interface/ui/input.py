@@ -3,16 +3,35 @@
 from tools.input.index import custom_input
 from tools.seats.index import get_coords_seat, get_free_seat
 from custom_types import CinemaHall
+from constants.index import FILM_CATEGORY, FILM_CLASSIFICATION
 
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
     """Obtiene opción del menú de administrador."""
-    valid_options = [1, 2, 9]
+    valid_options = [1, 9] 
     if movies_count > 0:
-        valid_options.extend(range(3, movies_count + 3))
+        valid_options.append(2)
     
     return custom_input(
         "Elija una opción: ",
+        int,
+        error_message="Opción inválida.",
+        validator=lambda option: (
+            ("Opción inválida.", None)
+            if option not in valid_options
+            else (None, option)
+        ),
+    )
+
+
+def get_movie_selection_choice(movies_count: int) -> int:
+    """Obtiene la opción de selección de películas para editar y valida la opción."""
+    valid_options = [9] 
+    if movies_count > 0:
+        valid_options.extend(range(1, movies_count + 1)) 
+    
+    return custom_input(
+        "Seleccione una película: ",
         int,
         error_message="Opción inválida.",
         validator=lambda option: (
@@ -46,7 +65,7 @@ def get_user_menu_choice_movies(movies_count: int) -> int:
         valid_options.extend(range(1, movies_count + 1))
     
     return custom_input(
-        "Elija una película (9 para entrar en modo administrador): ",
+        "Elija una película (9 para salir): ",
         int,
         error_message="Opción inválida.",
         validator=lambda option: (
@@ -62,7 +81,7 @@ def get_user_menu_choice(halls_count: int) -> int:
     halls_indexes = range(halls_count)
     
     return custom_input(
-        "Elija una sala (9 para entrar en modo administrador): ",
+        "Elija una sala (9 para salir): ",
         int,
         error_message="Opcion invalida.",
         validator=lambda option: (
@@ -112,40 +131,40 @@ def get_new_film_name_input() -> str:
     return input("En esta sala se proyectará: ")
 
 
-def get_movie_category_input() -> str:
+def get_movie_category_input() -> int:
     """Obtiene categoría de película."""
     print("\nCategorías disponibles:")
-    print("A - Éxito de taquilla")
-    print("B - Drama/Romance") 
-    print("C - Acción/Aventura")
-    print("D - Terror/Suspenso")
+    print("1. Comedia/Fantasía")
+    print("2. Drama/Romance") 
+    print("3. Acción/Aventura")
+    print("4. Terror/Suspenso")
     
     return custom_input(
-        "Seleccione la categoría (A/B/C/D): ",
-        str,
+        "Seleccione la categoría (1-4): ",
+        int,
         validator=lambda category: (
-            (None, category.upper())
-            if category.upper() in ["A", "B", "C", "D"]
-            else ("Categoría inválida. Debe ser A, B, C o D.", None)
+            (None, category)
+            if category in [1, 2, 3, 4]
+            else ("Categoría inválida. Debe ser 1, 2, 3 o 4.", None)
         ),
     )
 
 
-def get_movie_classification_input() -> str:
+def get_movie_classification_input() -> int:
     """Obtiene clasificación de edad de película."""
     print("\nClasificaciones disponibles:")
-    print("ATP - Apta para todo público")
-    print("+13 - Mayores de 13 años")
-    print("+16 - Mayores de 16 años") 
-    print("+18 - Mayores de 18 años")
+    print("1. Apta para todo público (ATP)")
+    print("2. Mayores de 13 años (SAM 13)")
+    print("3. Mayores de 16 años (SAM 16)") 
+    print("4. Mayores de 18 años (SAM 18)")
     
     return custom_input(
-        "Seleccione la clasificación (ATP/+13/+16/+18): ",
-        str,
+        "Seleccione la clasificación (1-4): ",
+        int,
         validator=lambda classification: (
-            (None, classification.upper() if classification.upper() == "ATP" else classification)
-            if classification.upper() in ["ATP"] or classification in ["+13", "+16", "+18"]
-            else ("Clasificación inválida. Debe ser ATP, +13, +16 o +18.", None)
+            (None, classification)
+            if classification in [1, 2, 3, 4]
+            else ("Clasificación inválida. Debe ser 1, 2, 3 o 4.", None)
         ),
     )
 
@@ -222,8 +241,10 @@ def get_free_seat_selection(hall: CinemaHall) -> tuple[int, int]:
     return get_free_seat(hall)
 
 
-def get_complete_movie_data() -> dict[str, str]:
+def get_complete_movie_data() -> dict:
     """Obtiene datos completos de película."""
+    from constants.index import FILM_CATEGORY, FILM_CLASSIFICATION
+    
     print("\n" + "="*50)
     print("         INFORMACIÓN DE LA PELÍCULA")
     print("="*50)
@@ -238,8 +259,8 @@ def get_complete_movie_data() -> dict[str, str]:
     
     print("\n✅ Información de película completada")
     print(f"📽️  Título: {title}")
-    print(f"🎭 Categoría: {category}")
-    print(f"🔞 Clasificación: {classification}")
+    print(f"🎭 Categoría: {FILM_CATEGORY[category]}")
+    print(f"🔞 Clasificación: {FILM_CLASSIFICATION[classification]}")
     print(f"📅 Horario: {schedule}")
     
     return {

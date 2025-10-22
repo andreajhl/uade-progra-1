@@ -4,8 +4,8 @@ from constants.index import DISABLED_SEAT_ICON, BUSY_SEAT_ICON, SEAT_ICON
 SeatState = Literal[DISABLED_SEAT_ICON, BUSY_SEAT_ICON, SEAT_ICON]
 CinemaHall = List[List[SeatState]]
 
-MovieCategory = Literal["A", "B", "C", "D"]
-AgeClassification = Literal["ATP", "+13", "+16", "+18"]
+MovieCategory = Literal[1, 2, 3, 4]
+AgeClassification = Literal[1, 2, 3, 4]
 
 class Movie(TypedDict):
     """Estructura de información de película."""

@@ -11,11 +11,13 @@ from tools.movies.index import (
 from interface.ui.display import (
     display_admin_menu_header,
     display_admin_menu_options,
-    display_movies_overview
+    display_movies_overview,
+    display_movie_selection_menu
 )
 from interface.ui.input import (
     get_admin_menu_choice_movies,
-    get_complete_movie_data
+    get_complete_movie_data,
+    get_movie_selection_choice
 )
 from tools.json.index import save_json
 
@@ -34,17 +36,16 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
             data_changed = True
             continue
             
-        if admin_choice == 9:
-            break
+        elif admin_choice == 2:
+            result = handle_edit_movie_selection(movies_db)
+            if result is not None:
+                movies_db, changed = result
+                if changed:
+                    data_changed = True
+            continue
             
-        movie_ids = get_all_movie_ids(movies_db)
-        if admin_choice > 2 and admin_choice <= len(movie_ids) + 2:
-            movie_index = admin_choice - 3 
-            if movie_index < len(movie_ids):
-                clear_screen()
-                movie_id = movie_ids[movie_index]
-                movies_db = handle_movie_management(movies_db, movie_id)
-                data_changed = True
+        elif admin_choice == 9:
+            break
 
     if data_changed:
         save_json(movies_db)
@@ -96,3 +97,24 @@ def handle_movie_management(movies_db: MoviesDatabase, movie_id: str) -> MoviesD
     
     from interface.execution.hall_admin_flow import run_hall_admin_interface
     return run_hall_admin_interface(movies_db, movie_id)
+
+
+def handle_edit_movie_selection(movies_db: MoviesDatabase) -> tuple[MoviesDatabase, bool] | None:
+    """Maneja el submenú de selección de películas para edición."""
+    while True:
+        clear_screen()
+        display_movie_selection_menu(movies_db)
+        
+        movies_count = get_movies_count(movies_db)
+        choice = get_movie_selection_choice(movies_count)
+        
+        if choice == 9: return None 
+            
+        movie_ids = get_all_movie_ids(movies_db)
+
+        if 1 <= choice <= len(movie_ids):
+            movie_index = choice - 1
+            movie_id = movie_ids[movie_index]
+            clear_screen()
+            movies_db = handle_movie_management(movies_db, movie_id)
+            return movies_db, True
