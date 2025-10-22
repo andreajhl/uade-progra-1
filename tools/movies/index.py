@@ -235,3 +235,57 @@ def validate_date_format(date_str: str) -> bool:
         return True
     except (ValueError, AttributeError):
         return False
+
+
+def search_movies_by_name(movies_db: MoviesDatabase, search_term: str) -> list[tuple[str, Movie]]:
+    """
+    Searches movies by name (partial match, case insensitive).
+    
+    Args:
+        movies_db: Movies database
+        search_term: Term to search for in movie titles
+        
+    Returns:
+        List of tuples (movie_id, movie) matching the search term
+    """
+    results = []
+    search_term_lower = search_term.lower()
+    
+    for movie_id, movie in movies_db.items():
+        if search_term_lower in movie["title"].lower():
+            results.append((movie_id, movie))
+    
+    return results
+
+
+def search_movies_by_category(movies_db: MoviesDatabase, category: MovieCategory) -> list[tuple[str, Movie]]:
+    """
+    Searches movies by category.
+    
+    Args:
+        movies_db: Movies database
+        category: Category to search for
+        
+    Returns:
+        List of tuples (movie_id, movie) matching the category
+    """
+    results = []
+    
+    for movie_id, movie in movies_db.items():
+        if movie["category"] == category:
+            results.append((movie_id, movie))
+    
+    return results
+
+
+def get_all_movies_list(movies_db: MoviesDatabase) -> list[tuple[str, Movie]]:
+    """
+    Gets all movies as a list of tuples.
+    
+    Args:
+        movies_db: Movies database
+        
+    Returns:
+        List of tuples (movie_id, movie) for all movies
+    """
+    return list(movies_db.items())

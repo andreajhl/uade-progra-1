@@ -72,6 +72,41 @@ def display_user_welcome() -> None:
     print("\tBienvenido.")
 
 
+def display_user_menu_options() -> None:
+    """Muestra las opciones del menú del usuario."""
+    print("""
+1 - Ver listado de películas
+2 - Buscar película por nombre
+3 - Buscar película por categoría
+9 - Salir
+""")
+
+
+def display_filtered_movies(movies_list: list, title: str) -> None:
+    """Muestra la lista de películas filtradas."""
+    print(f"\n{title}")
+    print("="*50)
+    
+    if not movies_list:
+        print("No se encontraron películas que coincidan con la busqueda.")
+        print("="*50)
+        return
+    
+    for i, (_, movie) in enumerate(movies_list, 1):
+        title = movie['title']
+        category = FILM_CATEGORY[movie['category']]
+        classification = FILM_CLASSIFICATION[movie['classification']]
+
+        print(f"{i} - Título: {title}")
+        print(f"    Categoría: {category}")
+        print(f"    Clasificación: {classification}")
+        print(f"    Horario: {movie['schedule']}")
+        print()
+    
+    print("9 - Volver al menú anterior")
+    print("="*50)
+
+
 def display_hall_admin_header(film_name: str) -> None:
     """Muestra encabezado de administración de sala."""
     print("\tPanel de administración.")

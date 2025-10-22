@@ -20,6 +20,7 @@ from interface.ui.input import (
     get_movie_selection_choice
 )
 from tools.json.index import save_json
+from constants.index import FILM_CLASSIFICATION, FILM_CATEGORY
 
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
@@ -76,10 +77,13 @@ def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
         classification=movie_data["classification"], 
         schedule=movie_data["schedule"]
     )
+
+    category = FILM_CATEGORY[movie_data['category']]
+    classification = FILM_CLASSIFICATION[movie_data['classification']]
     
     print(f"\n✅ Película creada exitosamente: '{movie_data['title']}'")
-    print(f"🎭 Categoría: {movie_data['category']}")
-    print(f"🔞 Clasificación: {movie_data['classification']}")
+    print(f"🎭 Categoría: {category}")
+    print(f"🔞 Clasificación: {classification}")
     print(f"📅 Horario: {movie_data['schedule']}")
     print(f"🆔 ID: {movie_id}")
     

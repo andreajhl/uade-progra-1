@@ -3,7 +3,6 @@
 from tools.input.index import custom_input
 from tools.seats.index import get_coords_seat, get_free_seat
 from custom_types import CinemaHall
-from constants.index import FILM_CATEGORY, FILM_CLASSIFICATION
 
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
@@ -59,13 +58,79 @@ def get_admin_menu_choice(halls_count: int) -> int:
 
 
 def get_user_menu_choice_movies(movies_count: int) -> int:
-    """Obtiene opción del menú de usuario."""
-    valid_options = [9]
+    """Gets user menu choice for movies system with validation."""
+    valid_options = [9]  # 9=Exit to main menu
     if movies_count > 0:
         valid_options.extend(range(1, movies_count + 1))
     
     return custom_input(
         "Elija una película (9 para salir): ",
+        int,
+        error_message="Opción inválida.",
+        validator=lambda option: (
+            ("Opción inválida.", None)
+            if option not in valid_options
+            else (None, option)
+        ),
+    )
+
+
+def get_user_main_menu_choice() -> int:
+    """Gets user main menu choice with validation."""
+    valid_options = [1, 2, 3, 9]
+    
+    return custom_input(
+        "Elija una opción: ",
+        int,
+        error_message="Opción inválida.",
+        validator=lambda option: (
+            ("Opción inválida.", None)
+            if option not in valid_options
+            else (None, option)
+        ),
+    )
+
+
+def get_movie_name_search() -> str:
+    """Gets movie name for search."""
+    return custom_input(
+        "Ingrese el nombre de la película a buscar: ",
+        str,
+        validator=lambda name: (
+            ("El nombre no puede estar vacío.", None)
+            if not name.strip()
+            else (None, name.strip())
+        )
+    )
+
+
+def get_category_choice(categories: list[str]) -> str:
+    """Gets category choice for search."""
+    print("\nCategorías disponibles:")
+    for i, category in enumerate(categories, 1):
+        print(f"{i} - {category}")
+    
+    choice = custom_input(
+        f"Seleccione la categoría (1-{len(categories)}): ",
+        int,
+        validator=lambda num: (
+            (None, num)
+            if 1 <= num <= len(categories)
+            else (f"Categoría inválida. Debe ser entre 1 y {len(categories)}.", None)
+        ),
+    )
+    
+    return categories[choice - 1]  # Return the selected category name
+
+
+def get_filtered_movie_choice(movies_count: int) -> int:
+    """Gets choice from filtered movie list."""
+    valid_options = [9]  # 9=Back
+    if movies_count > 0:
+        valid_options.extend(range(1, movies_count + 1))
+    
+    return custom_input(
+        "Seleccione una película para comprar entradas: ",
         int,
         error_message="Opción inválida.",
         validator=lambda option: (
