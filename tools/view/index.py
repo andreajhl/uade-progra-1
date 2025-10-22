@@ -1,6 +1,13 @@
 from string import ascii_uppercase as ALPHABET
+from string import ascii_lowercase
 
 ALPHABET_LEN = ALPHABET.__len__()
+
+def validate_a_Z_string(string:str)->bool:
+    for letter in string:
+        if not(letter.lower() in ascii_lowercase):
+            return False
+    return True
 
 
 def letters_into_numbers(letters: str) -> int:

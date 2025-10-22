@@ -3,16 +3,16 @@ from custom_types import CinemaHall
 from tools.view.index import numbers_into_letters, calculate_width
 
 
-def show_columns(total_columns: int, width_row: int):
-    """Muestra por consola las columnas de la sala de cine (cantidad total de columnas, cantidad de fila)"""
+def show_columns(total_columns: int, width_row: int) -> None:
+    """Muestra encabezados de columnas."""
     print("Columns", end=" ")
     for c in range(total_columns):
         print(f"{numbers_into_letters(c):>{width_row + 5}}", end="")
     print()
 
 
-def show_rows(hall: CinemaHall, width_seat: int, width_row: int):
-    """Muestra por consola las filas de la sala de cine (Cinema Hall, cantidad de columnas, cantidad de fila)"""
+def show_rows(hall: CinemaHall, width_seat: int, width_row: int) -> None:
+    """Muestra filas de la sala con butacas."""
     rows = len(hall)
     columns = len(hall[0])
 
@@ -23,8 +23,8 @@ def show_rows(hall: CinemaHall, width_seat: int, width_row: int):
         print()
 
 
-def clear_screen():
-    """Limpia consola"""
+def clear_screen() -> None:
+    """Limpia la pantalla de consola."""
     # Para sistemas Windows
     if os.name == "nt":
         _ = os.system("cls")
@@ -33,8 +33,8 @@ def clear_screen():
         _ = os.system("clear")
 
 
-def show_hall(hall: CinemaHall):
-    """Muesta en pantalla el Hall (Hall)"""
+def show_hall(hall: CinemaHall) -> None:
+    """Muestra el diseño de la sala de cine en pantalla."""
     if not hall or not hall[0]:
         print("Sala de Cine (sin butacas)")
         return
