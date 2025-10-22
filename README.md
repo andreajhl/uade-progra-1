@@ -96,3 +96,13 @@ Cuenta con dos funciones principales: una para la
 ├── 📄 main.py                     # Punto de entrada limpio
 ├── 📄 custom_types.py             # Tipos de datos del sistema
 ```
+
+### Flujo de Datos
+
+```
+main.py → interface/[admin/user]_interface.py → execution/[admin/user/hall/tickets]_flow.py
+                                                              ↓
+                                                      core/[hall/ticket]_operations.py
+                                                              ↓
+                                                      ui/display.py + ui/input.py
+```
