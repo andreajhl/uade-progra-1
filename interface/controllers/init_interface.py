@@ -6,6 +6,7 @@ from interface.controllers.user_interface import user_interface
 from tools.input.index import custom_input
 from tools.display.index import clear_screen
 from tools.movies.index import create_empty_movies_database
+from tools.loggin.main_loggin import loggin
 
 
 def init_interface() -> None:
@@ -39,6 +40,14 @@ def init_interface() -> None:
 
         if option == 1:
             print("\n🔧 Accediendo al Panel de Administrador...")
+            success = loggin()  # Recibe True o False
+
+            if not success:
+                print("\n🚫 Inicio de sesión fallido. Volviendo al menú principal...")
+                input("Presione Enter para continuar...")
+                clear_screen()
+                continue  #vuelve al menú principal
+
             movies_db = admin_interface(movies_db)
                 
         elif option == 2:
