@@ -14,7 +14,6 @@ def get_admin_loggin_data() -> str:
         )
     )
 
-
 def get_password_input() -> str:
     """Solicita la contraseña del usuario."""
     return custom_input(
@@ -26,7 +25,6 @@ def get_password_input() -> str:
             else (None, pwd.strip())
         )
     )
-
 
 def handle_user_loggin(users_db: UserDatabase) -> bool:
     """Maneja el inicio de sesión del usuario.
