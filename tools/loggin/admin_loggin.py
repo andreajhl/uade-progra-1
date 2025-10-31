@@ -1,6 +1,6 @@
 from tools.input.index import custom_input
 from custom_types import UserDatabase
-
+from tools.loggin.decrypt_encrypt import decrypt
 
 def get_admin_loggin_data() -> str:
     """Solicita el nombre de usuario."""
@@ -40,13 +40,13 @@ def handle_user_loggin(users_db: UserDatabase) -> bool:
         print(f"🔍 Usuario inexistente: '{username_input}'")
         input("Presiona Enter para continuar...")
         return False
-    password_input = get_password_input()
+    password_input = decrypt(get_password_input(),4)
     while password_input != user["password"]:
-        password_input = get_password_input()
-        if password_input=="9":
+        print("\n❌ Contraseña incorrecta.")
+        password_input = decrypt(get_password_input(),4)
+        if password_input==decrypt("9"):
             print(f"\n Acceso denegado.")
             return False
-        print("\n❌ Contraseña incorrecta.")
   
     print(f"\n Acceso concedido.")
     return True
