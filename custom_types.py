@@ -16,3 +16,5 @@ class Movie(TypedDict):
     schedule: str
 
 MoviesDatabase = dict[str, Movie]
+
+UserDatabase = dict[str, str]
