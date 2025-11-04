@@ -1,5 +1,5 @@
 
-from interface.execution.admin_flow import get_category, get_classification
+from tools.movies.index import get_categories, get_classifications
 from custom_types import CinemaHall
 from tools.display.index import show_hall
 
@@ -34,9 +34,9 @@ def display_movie_selection_menu(movies_db) -> None:
         movie = get_movie_by_id(movies_db, movie_id)
         if movie:
             title = movie["title"][:30] + "..." if len(movie["title"]) > 30 else movie["title"]
-            categories = get_category()
+            categories = get_categories()
             category=categories[movie["category"]]
-            classifications = get_classification()
+            classifications = get_classifications()
             classification = classifications[movie["classification"]]
             
             print(f"{i} - {title} ({category}, {classification})")
@@ -58,9 +58,9 @@ def display_movies_overview(movies_db) -> None:
         movie = get_movie_by_id(movies_db, movie_id)
         if movie:
             title = movie["title"][:15] + "..." if len(movie["title"]) > 15 else movie["title"]
-            categories = get_category()
+            categories = get_categories()
             category=categories[movie["category"]]
-            classifications = get_classification()
+            classifications = get_classifications()
             classification = classifications[movie["classification"]]
 
             print(f"{i} \t {title:<15} \t {category} \t\t {classification} \t\t {movie['schedule']}")
@@ -97,9 +97,9 @@ def display_filtered_movies(movies_list: list, title: str) -> None:
     
     for i, (_, movie) in enumerate(movies_list, 1):
         title = movie['title']
-        categories = get_category()
+        categories = get_categories()
         category=categories[movie["category"]]
-        classifications = get_classification()
+        classifications = get_classifications()
         classification = classifications[movie["classification"]]
 
         print(f"{i} - Título: {title}")

@@ -1,5 +1,4 @@
 from constants.index import MOVIE_PATH
-from constants.index import KEY_MOVIE_DB
 from custom_types import CinemaHall, MoviesDatabase
 from tools.display.index import clear_screen
 from tools.movies.index import get_movie_by_id, delete_movie

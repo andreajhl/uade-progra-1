@@ -290,14 +290,14 @@ def get_all_movies_list(movies_db: MoviesDatabase) -> list[tuple[str, Movie]]:
     """
     return list(movies_db.items())
 
-def get_category():
+def get_categories():
     category = read_json(CATEGORY_PATH)[0]
     if not category:
         return DEFAULT_CATEGORY
     else:
         return category
 
-def get_classification():
+def get_classifications():
     classification = read_json(CLASSIFICATION_PATH)[0]
     if not classification:
         return DEFAULT_CLASSIFICATION

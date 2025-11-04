@@ -1,8 +1,6 @@
 from constants.index import MOVIE_PATH
-from constants.index import KEY_MOVIE_DB
 from custom_types import MoviesDatabase
 from tools.display.index import clear_screen
-from constants.index import FILM_CATEGORY
 from tools.movies.index import (
     get_movie_by_id,
     search_movies_by_name,
@@ -22,7 +20,7 @@ from interface.ui.input import (
 )
 from tools.json.index import save_json
 from interface.execution.ticket_flow import run_ticket_purchase_interface
-
+from tools.movies.index import get_categories, get_classifications
 
 def run_user_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Flujo principal de interfaz de usuario."""
@@ -125,12 +123,12 @@ def handle_search_by_category(movies_db: MoviesDatabase) -> MoviesDatabase:
         input("Presiona Enter para continuar...")
         return movies_db
 
-    category_descriptions = [FILM_CATEGORY[cat_id] for cat_id in category_ids]
+    category_descriptions = [get_categories()[cat_id] for cat_id in category_ids]
 
     selected_description = get_category_choice(category_descriptions)
 
     selected_category_id = None
-    for cat_id, description in FILM_CATEGORY.items():
+    for cat_id, description in get_categories().items():
         if description == selected_description:
             selected_category_id = cat_id
             break

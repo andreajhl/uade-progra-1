@@ -28,7 +28,7 @@ def get_password_input() -> str:
 
 def handle_user_loggin(users_db: UserDatabase) -> bool:
     """Maneja el inicio de sesión del usuario.
-    Retorna True si el login es exitoso, False en caso contrario.
+    Retorna True si el loggin es exitoso, False en caso contrario.
     """
     password_input=None
     username_input = get_admin_loggin_data()
