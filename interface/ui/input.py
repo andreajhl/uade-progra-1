@@ -1,8 +1,8 @@
 
-
 from tools.input.index import custom_input
 from tools.seats.index import get_coords_seat, get_free_seat
 from custom_types import CinemaHall
+from interface.execution.admin_flow import get_category, get_classification
 
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
@@ -308,7 +308,6 @@ def get_free_seat_selection(hall: CinemaHall) -> tuple[int, int]:
 
 def get_complete_movie_data() -> dict:
     """Obtiene datos completos de película."""
-    from constants.index import FILM_CATEGORY, FILM_CLASSIFICATION
     
     print("\n" + "="*50)
     print("         INFORMACIÓN DE LA PELÍCULA")
@@ -317,15 +316,15 @@ def get_complete_movie_data() -> dict:
     title = get_film_name_input()
     
     category = get_movie_category_input()
-    
+    categories=get_category()
     classification = get_movie_classification_input()
-    
+    classifications = get_classification()
     schedule = get_movie_schedule_input()
     
     print("\n✅ Información de película completada")
     print(f"📽️  Título: {title}")
-    print(f"🎭 Categoría: {FILM_CATEGORY[category]}")
-    print(f"🔞 Clasificación: {FILM_CLASSIFICATION[classification]}")
+    print(f"🎭 Categoría: {categories[category]}")
+    print(f"🔞 Clasificación: {classifications[classification]}")
     print(f"📅 Horario: {schedule}")
     
     return {

@@ -1,3 +1,5 @@
+from constants.index import MOVIE_PATH
+from constants.index import KEY_MOVIE_DB
 from custom_types import MoviesDatabase
 from tools.display.index import clear_screen
 from constants.index import FILM_CATEGORY
@@ -47,7 +49,7 @@ def run_user_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
         clear_screen()
 
     if data_changed:
-        save_json(movies_db)
+        save_json(movies_db,MOVIE_PATH)
 
     clear_screen()
     return movies_db

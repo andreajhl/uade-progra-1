@@ -1,5 +1,5 @@
-
-
+from constants.index import (CATEGORY_PATH, CLASSIFICATION_PATH, DEFAULT_CATEGORY, DEFAULT_CLASSIFICATION)
+from tools.json.index import (read_json)
 import re
 from custom_types import Movie, MoviesDatabase, MovieCategory, AgeClassification, CinemaHall
 
@@ -289,3 +289,17 @@ def get_all_movies_list(movies_db: MoviesDatabase) -> list[tuple[str, Movie]]:
         List of tuples (movie_id, movie) for all movies
     """
     return list(movies_db.items())
+
+def get_category():
+    category = read_json(CATEGORY_PATH)[0]
+    if not category:
+        return DEFAULT_CATEGORY
+    else:
+        return category
+
+def get_classification():
+    classification = read_json(CLASSIFICATION_PATH)[0]
+    if not classification:
+        return DEFAULT_CLASSIFICATION
+    else:
+        return classification    

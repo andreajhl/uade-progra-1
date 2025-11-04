@@ -1,5 +1,4 @@
-
-
+from constants.index import (MOVIE_PATH, CATEGORY_PATH, CLASSIFICATION_PATH, DEFAULT_CATEGORY, DEFAULT_CLASSIFICATION)
 from custom_types import MoviesDatabase
 from tools.display.index import clear_screen
 from tools.movies.index import (
@@ -19,8 +18,7 @@ from interface.ui.input import (
     get_complete_movie_data,
     get_movie_selection_choice
 )
-from tools.json.index import save_json
-from constants.index import FILM_CLASSIFICATION, FILM_CATEGORY
+from tools.json.index import (save_json, read_json)
 
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
@@ -49,7 +47,7 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
             break
 
     if data_changed:
-        save_json(movies_db)
+        save_json(movies_db,MOVIE_PATH)
     
     clear_screen()
     return movies_db
@@ -61,6 +59,19 @@ def show_admin_menu_state(movies_db: MoviesDatabase) -> None:
     display_movies_overview(movies_db)
     display_admin_menu_options(get_movies_count(movies_db))
 
+def get_category():
+    category = read_json(CATEGORY_PATH)[0]
+    if not category:
+        return DEFAULT_CATEGORY
+    else:
+        return category
+
+def get_classification():
+    classification = read_json(CLASSIFICATION_PATH)[0]
+    if not classification:
+        return DEFAULT_CLASSIFICATION
+    else:
+        return classification    
 
 def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Maneja la creación de una nueva película."""
@@ -78,8 +89,8 @@ def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
         schedule=movie_data["schedule"]
     )
 
-    category = FILM_CATEGORY[movie_data['category']]
-    classification = FILM_CLASSIFICATION[movie_data['classification']]
+    category=get_category()
+    classification=get_classification()
     
     print(f"\n✅ Película creada exitosamente: '{movie_data['title']}'")
     print(f"🎭 Categoría: {category}")

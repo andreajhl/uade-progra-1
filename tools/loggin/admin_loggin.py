@@ -17,7 +17,7 @@ def get_admin_loggin_data() -> str:
 def get_password_input() -> str:
     """Solicita la contraseña del usuario."""
     return custom_input(
-        "Ingrese la contraseña (o 9 para salir):",
+        "Ingrese la contraseña (o 9 para salir): ",
         str,
         validator=lambda pwd: (
             ("La contraseña no puede estar vacía.", None)
