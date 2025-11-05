@@ -7,9 +7,10 @@ from tools.movies.index import get_categories, get_classifications
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
     """Obtiene opción del menú de administrador."""
-    valid_options = [1, 9] 
+    valid_options = [1,3,4,9]
     if movies_count > 0:
         valid_options.append(2)
+        print(valid_options)
     
     return custom_input(
         "Elija una opción: ",

@@ -1,7 +1,15 @@
 {
-    "mov_001_asd": {
-        "title": "asd",
+    "mov_001_asdas": {
+        "title": "asdas",
         "hall": [
+            [
+                "\u2b1c\ufe0f",
+                "\u2b1c\ufe0f"
+            ],
+            [
+                "\u2b1c\ufe0f",
+                "\u2b1c\ufe0f"
+            ],
             [
                 "\u2b1c\ufe0f",
                 "\u2b1c\ufe0f"
@@ -15,8 +23,8 @@
                 "\u2b1c\ufe0f"
             ]
         ],
-        "category": "2",
-        "classification": "3",
+        "category": "1",
+        "classification": "5",
         "schedule": "02/12/2025"
     }
 }

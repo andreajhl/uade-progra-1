@@ -18,9 +18,9 @@ from interface.ui.input import (
     get_complete_movie_data,
     get_movie_selection_choice
 )
-from tools.json.index import (save_json)
+from tools.json.index import (save_json, read_json)
 from tools.movies.index import get_categories, get_classifications
-
+from tools.input.index import custom_input
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Flujo principal de interfaz de administrador."""
@@ -43,7 +43,19 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
                 if changed:
                     data_changed = True
             continue
-            
+        
+        elif admin_choice == 3:
+            result=edit_classifications()
+            if result is not None:
+                data_changed = True
+            continue
+        
+        elif admin_choice == 4:
+            result=edit_category()
+            if result is not None:
+                data_changed = True
+            continue
+                            
         elif admin_choice == 9:
             break
 
@@ -126,3 +138,101 @@ def handle_edit_movie_selection(movies_db: MoviesDatabase) -> tuple[MoviesDataba
             clear_screen()
             movies_db = handle_movie_management(movies_db, movie_id)
             return movies_db, True
+        
+def edit_classifications():
+    classifications, err = read_json(CLASSIFICATION_PATH)
+    if err:
+        print(f"⚠️ Error al leer el archivo: {err}")
+        return
+
+    while True:
+        print("\n=== CLASIFICACIONES ACTUALES ===")
+        for key, value in classifications.items():
+            print(f"{key}. {value}")
+
+        print("\nOpciones:")
+        print("1. Agregar nueva clasificación")
+        print("2. Modificar una clasificación existente")
+        print("3. Eliminar una clasificación")
+        print("9. Salir")
+
+        choice = input("Seleccione una opción: ").strip()
+
+        if choice == "1":
+            new_key = str(max(map(int, classifications.keys())) + 1)
+            new_value = input("Ingrese el texto de la nueva clasificación: ").strip()
+            classifications[new_key] = new_value
+            print(f"Clasificación agregada con ID {new_key}")
+
+        elif choice == "2":
+            edit_key = input("Ingrese el número de la clasificación a modificar: ").strip()
+            if edit_key in classifications:
+                new_value = input(f"Ingrese el nuevo texto para '{classifications[edit_key]}': ").strip()
+                classifications[edit_key] = new_value
+                print("Clasificación modificada con éxito.")
+            else:
+                print("ID no válido.")
+
+        elif choice == "3":
+            del_key = input("Ingrese el número de la clasificación a eliminar: ").strip()
+            if del_key in classifications:
+                del classifications[del_key]
+                print(" Clasificación eliminada.")
+            else:
+                print("ID no válido.")
+
+        elif choice == "9":
+            break
+        else:
+            print("Opción inválida.")
+
+    save_json(classifications, CLASSIFICATION_PATH)
+    
+def edit_category():
+    categories, err = read_json(CATEGORY_PATH)
+    if err:
+        print(f"⚠️ Error al leer el archivo: {err}")
+        return
+
+    while True:
+        print("\n=== CATEGORIAS ACTUALES ===")
+        for key, value in categories.items():
+            print(f"{key}. {value}")
+
+        print("\nOpciones:")
+        print("1. Agregar nueva categorias")
+        print("2. Modificar una categorias existente")
+        print("3. Eliminar una categorias")
+        print("9. Salir")
+
+        choice = input("Seleccione una opción: ").strip()
+
+        if choice == "1":
+            new_key = str(max(map(int, categories.keys())) + 1)
+            new_value = input("Ingrese el texto de la nueva categorias: ").strip()
+            categories[new_key] = new_value
+            print(f"categorias agregada con ID {new_key}")
+
+        elif choice == "2":
+            edit_key = input("Ingrese el número de la categorias a modificar: ").strip()
+            if edit_key in categories:
+                new_value = input(f"Ingrese el nuevo texto para '{categories[edit_key]}': ").strip()
+                categories[edit_key] = new_value
+                print("categorias modificada con éxito.")
+            else:
+                print("ID no válido.")
+
+        elif choice == "3":
+            del_key = input("Ingrese el número de la categoria a eliminar: ").strip()
+            if del_key in categories:
+                del categories[del_key]
+                print(" categorias eliminada.")
+            else:
+                print("ID no válido.")
+
+        elif choice == "9":
+            break
+        else:
+            print("Opción inválida.")
+
+    save_json(categories, CATEGORY_PATH)
