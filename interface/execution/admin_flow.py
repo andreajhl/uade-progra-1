@@ -68,22 +68,27 @@ def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
     from interface.core.hall_operations import create_new_hall
     new_hall = create_new_hall()
     
+    categories=get_categories()
+    classifications=get_classifications()
+    title=movie_data["title"]
+    category=(movie_data["category"])
+    classification=(movie_data["classification"])
+    schedule=movie_data["schedule"]
+    hall=new_hall
+    
     movies_db, movie_id = add_movie_to_database(
         movies_db,
-        title=movie_data["title"],
-        hall=new_hall,
-        category=movie_data["category"],
-        classification=movie_data["classification"], 
-        schedule=movie_data["schedule"]
+        title,
+        hall,
+        category,
+        classification, 
+        schedule
     )
-
-    category=get_categories()
-    classification=get_classifications()
     
-    print(f"\n✅ Película creada exitosamente: '{movie_data['title']}'")
-    print(f"🎭 Categoría: {category}")
-    print(f"🔞 Clasificación: {classification}")
-    print(f"📅 Horario: {movie_data['schedule']}")
+    print(f"\n✅ Película creada exitosamente: '{title}'")
+    print(f"🎭 Categoría: {categories[category]}")
+    print(f"🔞 Clasificación: {classifications[classification]}")
+    print(f"📅 Horario: {schedule}")
     print(f"🆔 ID: {movie_id}")
     
     input("\n📌 Presione Enter para continuar...")
