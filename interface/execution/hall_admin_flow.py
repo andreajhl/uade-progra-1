@@ -1,5 +1,4 @@
-
-
+from constants.index import MOVIE_PATH
 from custom_types import CinemaHall, MoviesDatabase
 from tools.display.index import clear_screen
 from tools.movies.index import get_movie_by_id, delete_movie
@@ -74,7 +73,7 @@ def run_hall_admin_interface(movies_db: MoviesDatabase, movie_id: str) -> Movies
         clear_screen()
     
     if data_changed:
-        save_json(movies_db)
+        save_json(movies_db,MOVIE_PATH)
     
     return movies_db
 

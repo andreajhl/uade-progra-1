@@ -40,8 +40,8 @@ def init_interface() -> None:
 
         if option == 1:
             print("\n🔧 Accediendo al Panel de Administrador...")
-            success = loggin()  # Recibe True o False
-
+            success = loggin()
+            
             if not success:
                 print("\n🚫 Inicio de sesión fallido. Volviendo al menú principal...")
                 input("Presione Enter para continuar...")
