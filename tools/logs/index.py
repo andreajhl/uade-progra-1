@@ -12,7 +12,7 @@ def write_log(message: str) -> None:
         file.write(f"[{timestamp}] {message}\n")
 
 
-def read_log() -> list[str]:
+def read_logs() -> list[str]:
     """Lee el archivo de log y devuelve la lista de líneas."""
     if not os.path.exists(LOG_PATH):
         return []

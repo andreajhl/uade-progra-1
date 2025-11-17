@@ -18,8 +18,7 @@ def display_admin_menu_options(movies_count: int) -> None:
             f"""
 1 - Agregar función de cine
 2 - Editar película
-3 - Eliminar pelicula
-4 - Editar clasificaciones
+3 - Editar clasificaciones
 5 - Editar Categorias"""
         )
     else:
@@ -32,6 +31,7 @@ películas totales: {movies_count}
 4 - Editar Categorias"""
         )
 
+    print("6 - Ver registro de logs\n")
     print("9 - Salir\n")
 
 
