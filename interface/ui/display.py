@@ -13,7 +13,7 @@ def display_admin_menu_header() -> None:
 def display_admin_menu_options(movies_count: int) -> None:
     """Muestra opciones del menú de administrador."""
     if movies_count > 0:
-        print("películas totales: {movies_count}")
+        print(f"películas totales: {movies_count}")
         print(
             f"""
 1 - Agregar función de cine
