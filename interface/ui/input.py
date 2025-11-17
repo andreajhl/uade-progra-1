@@ -7,7 +7,7 @@ from tools.date.index import valid_day, split_date
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
     """Obtiene opción del menú de administrador."""
-    valid_options = [1, 3, 4, 9]
+    valid_options = [1, 3, 4, 5, 9]
     if movies_count > 0:
         valid_options.append(2)
 
@@ -59,7 +59,7 @@ def get_admin_menu_choice(halls_count: int) -> int:
 
 def get_user_menu_choice_movies(movies_count: int) -> int:
     """Gets user menu choice for movies system with validation."""
-    valid_options = [9]  # 9=Exit to main menu
+    valid_options = [9]
     if movies_count > 0:
         valid_options.extend(range(1, movies_count + 1))
 

@@ -2,8 +2,6 @@ from constants.index import (
     MOVIE_PATH,
     CATEGORY_PATH,
     CLASSIFICATION_PATH,
-    DEFAULT_CATEGORY,
-    DEFAULT_CLASSIFICATION,
 )
 from custom_types import MoviesDatabase
 from tools.display.index import clear_screen
@@ -25,9 +23,11 @@ from interface.ui.input import (
     get_movie_selection_choice,
 )
 from tools.json.index import save_json, read_json
+from tools.logs.index import read_logs
 from tools.movies.index import get_categories, get_classifications
 from tools.input.index import custom_input
 from tools.logs.index import write_log
+
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Flujo principal de interfaz de administrador."""
@@ -52,21 +52,19 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
             continue
 
         elif admin_choice == 3:
-            result = handle_remove_movie_selection(movies_db)
-            if result is not None:
-                data_changed = True
-            continue
-
-        elif admin_choice == 4:
             result = edit_classifications()
             if result is not None:
                 data_changed = True
             continue
 
-        elif admin_choice == 5:
+        elif admin_choice == 4:
             result = edit_category()
             if result is not None:
                 data_changed = True
+            continue
+
+        elif admin_choice == 5:
+            show_admin_logs()
             continue
 
         elif admin_choice == 9:
@@ -154,42 +152,6 @@ def handle_edit_movie_selection(
             return movies_db, True
 
 
-def handle_remove_movie_selection(
-    movies_db: MoviesDatabase,
-) -> tuple[MoviesDatabase, bool] | None:
-    movie_keys = list(movies_db.keys())
-
-    while True:
-        print("\n=== PELÍCULAS ACTUALES ===")
-        for i, key in enumerate(movie_keys, start=1):
-            title = movies_db[key].get("title", "Sin título")
-
-            print(f"{i}. {title} ({key})")
-            print("\n0. Salir sin eliminar")
-
-        option = custom_input(
-            "Seleccione el número de la película a eliminar: ",
-            int,
-            validator=lambda opt: (
-                (None, opt)
-                if 0 <= opt <= len(movie_keys)
-                else (f"Opción inválida. Seleccione entre 0 y {len(movie_keys)}.", None)
-            ),
-        )
-
-        if option == 0:
-            break
-
-        selected_key = movie_keys[option - 1]
-        title = movies_db[selected_key].get("title", "Sin título")
-
-        print(f"\n➡ Eliminando película: {title} ({selected_key})")
-        write_log(f"Se elimino la pelicula {title}")
-        del movies_db[selected_key]
-
-        return movies_db, True
-
-
 def edit_classifications():
     classifications, err = read_json(CLASSIFICATION_PATH)
     if err:
@@ -207,43 +169,83 @@ def edit_classifications():
         print("3. Eliminar una clasificación")
         print("9. Salir")
 
-        choice = input("Seleccione una opción: ").strip()
+        valid_options = [1, 2, 3, 9]
 
-        if choice == "1":
+        choice = custom_input(
+            "Elija una opción: ",
+            int,
+            error_message="Opción inválida.",
+            validator=lambda option: (
+                ("Opción inválida.", None)
+                if option not in valid_options
+                else (None, option)
+            ),
+        )
+
+        if choice == 1:
             new_key = str(max(map(int, classifications.keys())) + 1)
-            new_value = input("Ingrese el texto de la nueva clasificación: ").strip()
+            new_value = custom_input(
+                f"Ingrese el texto de la nueva clasificación: ",
+                str,
+                validator=lambda classification: (
+                    ("El nombre de la nueva clasificación no puede estar vacío.", None)
+                    if not classification.strip()
+                    else (None, classification.strip())
+                ),
+            )
+
             classifications[new_key] = new_value
             print(f"Clasificación agregada con ID {new_key}")
             write_log(f"Se creo la clasificacion {classifications[new_key]}")
 
-        elif choice == "2":
-            edit_key = input(
-                "Ingrese el número de la clasificación a modificar: "
-            ).strip()
+        elif choice == 2:
+            edit_key = custom_input(
+                f"Ingrese el número de la clasificación a modificar: ",
+                str,
+                validator=lambda classification: (
+                    ("El nombre de la clasificación no puede estar vacío.", None)
+                    if not classification.strip()
+                    else (None, classification.strip())
+                ),
+            )
+
             if edit_key in classifications:
-                new_value = input(
-                    f"Ingrese el nuevo texto para '{classifications[edit_key]}': "
-                ).strip()
-                old_classification=classifications[edit_key]
+                old_classification = classifications[edit_key]
+
+                new_value = custom_input(
+                    f"Ingrese el nuevo texto para '{classifications[edit_key]}': ",
+                    str,
+                    validator=lambda classification: (
+                        ("El nombre de la clasificación no puede estar vacío.", None)
+                        if not classification.strip()
+                        else (None, classification.strip())
+                    ),
+                )
                 classifications[edit_key] = new_value
                 print("Clasificación modificada con éxito.")
-                write_log(f"Se modifico la clasificacion {old_classification} por {classifications[edit_key]}")
+                write_log(
+                    f"Se modifico la clasificacion {old_classification} por {classifications[edit_key]}"
+                )
             else:
                 print("ID no válido.")
 
-        elif choice == "3":
-            del_key = input(
-                "Ingrese el número de la clasificación a eliminar: "
-            ).strip()
+        elif choice == 3:
+            del_key = custom_input(
+                f"Ingrese el número de la clasificación a eliminar: ",
+                int,
+                validator=lambda classification: (
+                    (None, str(classification))
+                    if str(classification) in classifications
+                    else ("ID no válido.", None)
+                ),
+            )
+
             if del_key in classifications:
                 write_log(f"Se elimino la clasificacion {classifications[del_key]}")
                 del classifications[del_key]
                 print(" Clasificación eliminada.")
 
-            else:
-                print("ID no válido.")
-
-        elif choice == "9":
+        elif choice == 9:
             break
         else:
             print("Opción inválida.")
@@ -268,40 +270,85 @@ def edit_category():
         print("3. Eliminar una categorias")
         print("9. Salir")
 
-        choice = input("Seleccione una opción: ").strip()
+        valid_options = [1, 2, 3, 9]
 
-        if choice == "1":
+        choice = custom_input(
+            "Elija una opción: ",
+            int,
+            error_message="Opción inválida.",
+            validator=lambda option: (
+                ("Opción inválida.", None)
+                if option not in valid_options
+                else (None, option)
+            ),
+        )
+
+        if choice == 1:
             new_key = str(max(map(int, categories.keys())) + 1)
-            new_value = input("Ingrese el texto de la nueva categorias: ").strip()
+
+            new_value = custom_input(
+                f"Ingrese el texto de la nueva categorias: ",
+                str,
+                validator=lambda category: (
+                    ("El nombre de la nueva categoria no puede estar vacío.", None)
+                    if not category.strip()
+                    else (None, category.strip())
+                ),
+            )
+
             categories[new_key] = new_value
+
             print(f"categorias agregada con ID {new_key}")
             write_log(f"Se agrego la clasificacion {categories[new_key]}")
 
-        elif choice == "2":
+        elif choice == 2:
             edit_key = input("Ingrese el número de la categorias a modificar: ").strip()
             if edit_key in categories:
-                new_value = input(
-                    f"Ingrese el nuevo texto para '{categories[edit_key]}': "
-                ).strip()
-                old_category=categories[edit_key]
+                old_category = categories[edit_key]
+
+                new_value = custom_input(
+                    f"Ingrese el número de la categorias a modificar: ",
+                    int,
+                    error_message="Opción inválida.",
+                    validator=lambda option: (
+                        ("Opción inválida.", None)
+                        if option not in valid_options
+                        else (None, option)
+                    ),
+                )
+
                 categories[edit_key] = new_value
-                write_log(f"Se modifico la clasificacion {old_category} por {categories[edit_key]}")
+                write_log(
+                    f"Se modifico la clasificacion {old_category} por {categories[edit_key]}"
+                )
                 print("categorias modificada con éxito.")
             else:
                 print("ID no válido.")
 
-        elif choice == "3":
-            del_key = input("Ingrese el número de la categoria a eliminar: ").strip()
+        elif choice == 3:
+            del_key = custom_input(
+                f"Ingrese el número de la categoria a eliminar: ",
+                int,
+                validator=lambda option: (
+                    ("Opción inválida.", None)
+                    if option not in valid_options
+                    else (None, option)
+                ),
+            )
+
             if del_key in categories:
                 write_log(f"Se elimino la clasificacion {categories[del_key]}")
                 del categories[del_key]
                 print(" categorias eliminada.")
-            else:
-                print("ID no válido.")
 
-        elif choice == "9":
+        elif choice == 9:
             break
         else:
             print("Opción inválida.")
 
     save_json(categories, CATEGORY_PATH)
+
+
+def show_admin_logs():
+    """Return admin logs list"""
+    return read_logs()
