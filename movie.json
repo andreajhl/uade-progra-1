@@ -4,27 +4,23 @@
         "hall": [
             [
                 "\u2b1c\ufe0f",
-                "\u2b1c\ufe0f"
-            ],
-            [
+                "\u2b1c\ufe0f",
+                "\u2b1c\ufe0f",
+                "\u2b1c\ufe0f",
                 "\u2b1c\ufe0f",
                 "\u2b1c\ufe0f"
             ],
             [
                 "\u2b1c\ufe0f",
-                "\u2b1c\ufe0f"
-            ],
-            [
                 "\u2b1c\ufe0f",
-                "\u2b1c\ufe0f"
-            ],
-            [
+                "\u2b1c\ufe0f",
+                "\u2b1c\ufe0f",
                 "\u2b1c\ufe0f",
                 "\u2b1c\ufe0f"
             ]
         ],
-        "category": "1",
-        "classification": "5",
-        "schedule": "02/12/2025"
+        "category": "2",
+        "classification": "3",
+        "schedule": "02/11/2025"
     }
 }
