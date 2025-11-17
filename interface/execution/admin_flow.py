@@ -27,7 +27,7 @@ from interface.ui.input import (
 from tools.json.index import save_json, read_json
 from tools.movies.index import get_categories, get_classifications
 from tools.input.index import custom_input
-
+from tools.logs.index import write_log
 
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Flujo principal de interfaz de administrador."""
@@ -114,6 +114,7 @@ def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
 
     input("\n📌 Presione Enter para continuar...")
     clear_screen()
+    write_log(f"Se creo la pelicula {title}")
     return movies_db
 
 
@@ -183,6 +184,7 @@ def handle_remove_movie_selection(
         title = movies_db[selected_key].get("title", "Sin título")
 
         print(f"\n➡ Eliminando película: {title} ({selected_key})")
+        write_log(f"Se elimino la pelicula {title}")
         del movies_db[selected_key]
 
         return movies_db, True
@@ -212,6 +214,7 @@ def edit_classifications():
             new_value = input("Ingrese el texto de la nueva clasificación: ").strip()
             classifications[new_key] = new_value
             print(f"Clasificación agregada con ID {new_key}")
+            write_log(f"Se creo la clasificacion {classifications[new_key]}")
 
         elif choice == "2":
             edit_key = input(
@@ -221,8 +224,10 @@ def edit_classifications():
                 new_value = input(
                     f"Ingrese el nuevo texto para '{classifications[edit_key]}': "
                 ).strip()
+                old_classification=classifications[edit_key]
                 classifications[edit_key] = new_value
                 print("Clasificación modificada con éxito.")
+                write_log(f"Se modifico la clasificacion {old_classification} por {classifications[edit_key]}")
             else:
                 print("ID no válido.")
 
@@ -231,8 +236,10 @@ def edit_classifications():
                 "Ingrese el número de la clasificación a eliminar: "
             ).strip()
             if del_key in classifications:
+                write_log(f"Se elimino la clasificacion {classifications[del_key]}")
                 del classifications[del_key]
                 print(" Clasificación eliminada.")
+
             else:
                 print("ID no válido.")
 
@@ -268,6 +275,7 @@ def edit_category():
             new_value = input("Ingrese el texto de la nueva categorias: ").strip()
             categories[new_key] = new_value
             print(f"categorias agregada con ID {new_key}")
+            write_log(f"Se agrego la clasificacion {categories[new_key]}")
 
         elif choice == "2":
             edit_key = input("Ingrese el número de la categorias a modificar: ").strip()
@@ -275,7 +283,9 @@ def edit_category():
                 new_value = input(
                     f"Ingrese el nuevo texto para '{categories[edit_key]}': "
                 ).strip()
+                old_category=categories[edit_key]
                 categories[edit_key] = new_value
+                write_log(f"Se modifico la clasificacion {old_category} por {categories[edit_key]}")
                 print("categorias modificada con éxito.")
             else:
                 print("ID no válido.")
@@ -283,6 +293,7 @@ def edit_category():
         elif choice == "3":
             del_key = input("Ingrese el número de la categoria a eliminar: ").strip()
             if del_key in categories:
+                write_log(f"Se elimino la clasificacion {categories[del_key]}")
                 del categories[del_key]
                 print(" categorias eliminada.")
             else:

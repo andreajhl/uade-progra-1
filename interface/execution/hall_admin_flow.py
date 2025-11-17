@@ -19,7 +19,7 @@ from interface.ui.input import (
     get_seat_coordinates,
     get_new_film_name_input
 )
-
+from tools.logs.index import write_log
 
 def run_hall_admin_interface(movies_db: MoviesDatabase, movie_id: str) -> MoviesDatabase:
     """Flujo principal de administración de sala."""
@@ -99,6 +99,7 @@ def handle_film_name_change(movies_db: MoviesDatabase, movie_id: str) -> MoviesD
     
     movie = get_movie_by_id(movies_db, movie_id)
     if movie:
+        write_log(f"Se modifico el titulo de la pelicula {movie["title"]} por {new_name}")
         movies_db[movie_id] = {
             "title": new_name,
             "hall": movie["hall"],
@@ -114,3 +115,4 @@ def handle_film_name_change(movies_db: MoviesDatabase, movie_id: str) -> MoviesD
 def handle_clear_occupied_seats(hall: CinemaHall) -> None:
     """Limpia todas las butacas ocupadas."""
     clear_all_occupied_seats(hall)
+    write_log("Se limpiaron todas las butacas ocupadas")

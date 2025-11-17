@@ -4,7 +4,7 @@ from custom_types import CinemaHall
 from constants.index import SEAT_ICON, BUSY_SEAT_ICON, DISABLED_SEAT_ICON
 from tools.halls.index import create_halls
 from tools.seats.index import get_seat_status, set_seat_status
-
+from tools.logs.index import write_log
 
 def create_new_hall() -> CinemaHall:
     """Crea nueva sala de cine."""
@@ -87,10 +87,13 @@ def change_seat_status(hall: CinemaHall, row: int, column: int, status_option: i
     """Cambia el estado de una butaca específica."""
     if status_option == 1:
         hall[row][column] = SEAT_ICON
+        write_log(f"Se modifico el asiento de la fila {row} y columna {column} a: habilitado")
     elif status_option == 2:
         hall[row][column] = BUSY_SEAT_ICON
+        write_log(f"Se modifico el asiento de la fila {row} y columna {column} a: ocupado")        
     else:
         hall[row][column] = DISABLED_SEAT_ICON
+        write_log(f"Se modifico el asiento de la fila {row} y columna {column} a: des-habilitado")
 
 
 def clear_all_occupied_seats(hall: CinemaHall) -> None:
