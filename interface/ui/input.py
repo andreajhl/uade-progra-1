@@ -247,6 +247,9 @@ def get_movie_schedule_input() -> str:
         validator=lambda date_str: validate_date_input(date_str)
     )
 
+def leap_year(year: int) -> bool:
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
 
 def split_date(date):
     """Separa componenetes de la fecha"""
@@ -259,10 +262,14 @@ def split_date(date):
 
     return(day, month, year)
 
-def valid_day(day,mont_comp):
+def valid_day(day,mont_comp, year):
     """Valida que el dia este """
-    meses= CONST_MESES
-    return(0<int(day)<=meses.get((int(mont_comp))))
+    meses = CONST_MESES.copy()
+    
+    if leap_year(year):
+        meses[2] = 29
+
+    return 1 <= day <= meses[mont_comp]
 
 def validate_date_input(date_str: str) -> tuple[str | None, str | None]:
     """Valida formato de fecha."""
@@ -277,7 +284,7 @@ def validate_date_input(date_str: str) -> tuple[str | None, str | None]:
             return ("Mes debe estar entre 1 y 12", None)
         if not (1900 <= year <= 2100):
             return ("Año debe estar entre 1900 y 2100", None)
-        if not valid_day(day,month):
+        if not valid_day(day,month,year):
             return ("Día Invalido para el mes indicado", None)
             
         formatted_date = f"{day:02d}/{month:02d}/{year}"
