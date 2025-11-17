@@ -3,7 +3,7 @@ from tools.input.index import custom_input
 from tools.seats.index import get_coords_seat, get_free_seat
 from custom_types import CinemaHall
 from tools.movies.index import get_categories, get_classifications
-from constants.index import CONST_MESES
+from tools.date.index import valid_day, split_date
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
     """Obtiene opción del menú de administrador."""
@@ -246,30 +246,6 @@ def get_movie_schedule_input() -> str:
         str,
         validator=lambda date_str: validate_date_input(date_str)
     )
-
-def leap_year(year: int) -> bool:
-    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
-
-
-def split_date(date):
-    """Separa componenetes de la fecha"""
-    day=int(date[:2])
-    if int(date[3])==0:
-        month=int(date[4:5])
-    else:
-        month=int(date[3:5])        
-    year=int(date[6:10])
-
-    return(day, month, year)
-
-def valid_day(day,mont_comp, year):
-    """Valida que el dia este """
-    meses = CONST_MESES.copy()
-    
-    if leap_year(year):
-        meses[2] = 29
-
-    return 1 <= day <= meses[mont_comp]
 
 def validate_date_input(date_str: str) -> tuple[str | None, str | None]:
     """Valida formato de fecha."""

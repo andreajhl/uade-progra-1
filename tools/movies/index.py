@@ -2,7 +2,7 @@ from constants.index import (CATEGORY_PATH, CLASSIFICATION_PATH, DEFAULT_CATEGOR
 from tools.json.index import (read_json)
 import re
 from custom_types import Movie, MoviesDatabase, MovieCategory, AgeClassification, CinemaHall
-
+from tools.date.index import valid_day, split_date
 
 def create_empty_movies_database() -> MoviesDatabase:
     """Crea una base de datos de películas vacía."""
@@ -222,16 +222,16 @@ def validate_date_format(date_str: str) -> bool:
         parts = date_str.split('/')
         if len(parts) != 3:
             return False
+
+        day, month, year = split_date(date_str)
         
-        day, month, year = map(int, parts)
-        
-        if not (1 <= day <= 31):
-            return False
         if not (1 <= month <= 12):
             return False
         if not (1900 <= year <= 2100):
             return False
-        
+        if not valid_day(day,month,year):
+            return False
+
         return True
     except (ValueError, AttributeError):
         return False
