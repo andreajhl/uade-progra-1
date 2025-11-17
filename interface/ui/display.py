@@ -1,4 +1,3 @@
-
 from tools.movies.index import get_categories, get_classifications
 from custom_types import CinemaHall
 from tools.display.index import show_hall
@@ -15,65 +14,79 @@ def display_admin_menu_options(movies_count: int) -> None:
     """Muestra opciones del menú de administrador."""
     if movies_count > 0:
         print("películas totales: {movies_count}")
-        print(f"""
+        print(
+            f"""
 1 - Agregar función de cine
 2 - Editar película
-3 - Editar clasificaciones
-4 - Editar Categorias""")
+3 - Eliminar pelicula
+4 - Editar clasificaciones
+5 - Editar Categorias"""
+        )
     else:
-        print(f"""
+        print(
+            f"""
 películas totales: {movies_count}
 
 1 - Agregar función de cine
 3 - Editar clasificaciones
-4 - Editar Categorias""")
-        
+4 - Editar Categorias"""
+        )
 
     print("9 - Salir\n")
 
 
 def display_movie_selection_menu(movies_db) -> None:
     """Muestra el menú de selección de películas para editar."""
-    
-    print("\n" + "="*50)
+
+    print("\n" + "=" * 50)
     print("         SELECCIONAR PELÍCULA PARA EDITAR")
-    print("="*50)
-    
+    print("=" * 50)
+
     movie_ids = get_all_movie_ids(movies_db)
     for i, movie_id in enumerate(movie_ids, 1):
         movie = get_movie_by_id(movies_db, movie_id)
         if movie:
-            title = movie["title"][:30] + "..." if len(movie["title"]) > 30 else movie["title"]
+            title = (
+                movie["title"][:30] + "..."
+                if len(movie["title"]) > 30
+                else movie["title"]
+            )
             categories = get_categories()
-            category=categories[movie["category"]]
+            category = categories[movie["category"]]
             classifications = get_classifications()
             classification = classifications[movie["classification"]]
-            
+
             print(f"{i} - {title} ({category}, {classification})")
-    
+
     print("9 - Volver al menú anterior")
-    print("="*50)
+    print("=" * 50)
 
 
 def display_movies_overview(movies_db) -> None:
     """Muestra resumen de todas las películas."""
-    
+
     print("Catálogo de Películas:")
     print("\nID \t Título \t\t Categoría \t\t\t Clasificación \t\t\t\t Fecha")
     print("-" * 120)
-    
+
     movie_ids = get_all_movie_ids(movies_db)
     for i, movie_id in enumerate(movie_ids, 1):
         movie = get_movie_by_id(movies_db, movie_id)
         if movie:
-            title = movie["title"][:15] + "..." if len(movie["title"]) > 15 else movie["title"]
+            title = (
+                movie["title"][:15] + "..."
+                if len(movie["title"]) > 15
+                else movie["title"]
+            )
             categories = get_categories()
-            category=categories[movie["category"]]
+            category = categories[movie["category"]]
             classifications = get_classifications()
             classification = classifications[movie["classification"]]
 
-            print(f"{i} \t {title:<15} \t {category} \t\t {classification} \t\t {movie['schedule']}")
-    
+            print(
+                f"{i} \t {title:<15} \t {category} \t\t {classification} \t\t {movie['schedule']}"
+            )
+
     if not movie_ids:
         print("No hay películas disponibles.")
     print()
@@ -86,28 +99,30 @@ def display_user_welcome() -> None:
 
 def display_user_menu_options() -> None:
     """Muestra las opciones del menú del usuario."""
-    print("""
+    print(
+        """
 1 - Ver listado de películas
 2 - Buscar película por nombre
 3 - Buscar película por categoría
 9 - Salir
-""")
+"""
+    )
 
 
 def display_filtered_movies(movies_list: list, title: str) -> None:
     """Muestra la lista de películas filtradas."""
     print(f"\n{title}")
-    print("="*50)
-    
+    print("=" * 50)
+
     if not movies_list:
         print("No se encontraron películas que coincidan con la busqueda.")
-        print("="*50)
+        print("=" * 50)
         return
-    
+
     for i, (_, movie) in enumerate(movies_list, 1):
-        title = movie['title']
+        title = movie["title"]
         categories = get_categories()
-        category=categories[movie["category"]]
+        category = categories[movie["category"]]
         classifications = get_classifications()
         classification = classifications[movie["classification"]]
 
@@ -116,9 +131,9 @@ def display_filtered_movies(movies_list: list, title: str) -> None:
         print(f"    Clasificación: {classification}")
         print(f"    Fecha: {movie['schedule']}")
         print()
-    
+
     print("9 - Volver al menú anterior")
-    print("="*50)
+    print("=" * 50)
 
 
 def display_hall_admin_header(film_name: str) -> None:
@@ -135,11 +150,13 @@ def display_hall_details(hall: CinemaHall) -> None:
 
 def display_hall_admin_options() -> None:
     """Muestra opciones de administración de sala."""
-    print("""1 - marcar como Ocupada/Deshabilitada/Habilitada una butaca
+    print(
+        """1 - marcar como Ocupada/Deshabilitada/Habilitada una butaca
 2 - Cambiar nombre de pelicula
 3 - Limpiar todos los asientos ocupados
 4 - Eliminar sala
-9 - Guardar y salir\n""")
+9 - Guardar y salir\n"""
+    )
 
 
 def display_seat_status_options() -> None:

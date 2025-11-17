@@ -1,41 +1,48 @@
-from constants.index import (MOVIE_PATH, CATEGORY_PATH, CLASSIFICATION_PATH, DEFAULT_CATEGORY, DEFAULT_CLASSIFICATION)
+from constants.index import (
+    MOVIE_PATH,
+    CATEGORY_PATH,
+    CLASSIFICATION_PATH,
+    DEFAULT_CATEGORY,
+    DEFAULT_CLASSIFICATION,
+)
 from custom_types import MoviesDatabase
 from tools.display.index import clear_screen
 from tools.movies.index import (
     get_movies_count,
     add_movie_to_database,
     get_all_movie_ids,
-    get_movie_by_id
+    get_movie_by_id,
 )
 from interface.ui.display import (
     display_admin_menu_header,
     display_admin_menu_options,
     display_movies_overview,
-    display_movie_selection_menu
+    display_movie_selection_menu,
 )
 from interface.ui.input import (
     get_admin_menu_choice_movies,
     get_complete_movie_data,
-    get_movie_selection_choice
+    get_movie_selection_choice,
 )
-from tools.json.index import (save_json, read_json)
+from tools.json.index import save_json, read_json
 from tools.movies.index import get_categories, get_classifications
 from tools.input.index import custom_input
 
+
 def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Flujo principal de interfaz de administrador."""
-    data_changed = False 
-    
+    data_changed = False
+
     while True:
         show_admin_menu_state(movies_db)
-        
+
         admin_choice = get_admin_menu_choice_movies(get_movies_count(movies_db))
-        
+
         if admin_choice == 1:
             movies_db = handle_create_movie(movies_db)
             data_changed = True
             continue
-            
+
         elif admin_choice == 2:
             result = handle_edit_movie_selection(movies_db)
             if result is not None:
@@ -43,25 +50,31 @@ def run_admin_interface(movies_db: MoviesDatabase) -> MoviesDatabase:
                 if changed:
                     data_changed = True
             continue
-        
+
         elif admin_choice == 3:
-            result=edit_classifications()
+            result = handle_remove_movie_selection(movies_db)
             if result is not None:
                 data_changed = True
             continue
-        
+
         elif admin_choice == 4:
-            result=edit_category()
+            result = edit_classifications()
             if result is not None:
                 data_changed = True
             continue
-                            
+
+        elif admin_choice == 5:
+            result = edit_category()
+            if result is not None:
+                data_changed = True
+            continue
+
         elif admin_choice == 9:
             break
 
     if data_changed:
-        save_json(movies_db,MOVIE_PATH)
-    
+        save_json(movies_db, MOVIE_PATH)
+
     clear_screen()
     return movies_db
 
@@ -76,33 +89,29 @@ def show_admin_menu_state(movies_db: MoviesDatabase) -> None:
 def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
     """Maneja la creación de una nueva película."""
     movie_data = get_complete_movie_data()
-    
+
     from interface.core.hall_operations import create_new_hall
+
     new_hall = create_new_hall()
-    
-    categories=get_categories()
-    classifications=get_classifications()
-    title=movie_data["title"]
-    category=(movie_data["category"])
-    classification=(movie_data["classification"])
-    schedule=movie_data["schedule"]
-    hall=new_hall
-    
+
+    categories = get_categories()
+    classifications = get_classifications()
+    title = movie_data["title"]
+    category = movie_data["category"]
+    classification = movie_data["classification"]
+    schedule = movie_data["schedule"]
+    hall = new_hall
+
     movies_db, movie_id = add_movie_to_database(
-        movies_db,
-        title,
-        hall,
-        category,
-        classification, 
-        schedule
+        movies_db, title, hall, category, classification, schedule
     )
-    
+
     print(f"\n✅ Película creada exitosamente: '{title}'")
     print(f"🎭 Categoría: {categories[category]}")
     print(f"🔞 Clasificación: {classifications[classification]}")
     print(f"📅 Fecha: {schedule}")
     print(f"🆔 ID: {movie_id}")
-    
+
     input("\n📌 Presione Enter para continuar...")
     clear_screen()
     return movies_db
@@ -114,22 +123,26 @@ def handle_movie_management(movies_db: MoviesDatabase, movie_id: str) -> MoviesD
     if not movie:
         print(f"❌ Película con ID {movie_id} no encontrada")
         return movies_db
-    
+
     from interface.execution.hall_admin_flow import run_hall_admin_interface
+
     return run_hall_admin_interface(movies_db, movie_id)
 
 
-def handle_edit_movie_selection(movies_db: MoviesDatabase) -> tuple[MoviesDatabase, bool] | None:
+def handle_edit_movie_selection(
+    movies_db: MoviesDatabase,
+) -> tuple[MoviesDatabase, bool] | None:
     """Maneja el submenú de selección de películas para edición."""
     while True:
         clear_screen()
         display_movie_selection_menu(movies_db)
-        
+
         movies_count = get_movies_count(movies_db)
         choice = get_movie_selection_choice(movies_count)
-        
-        if choice == 9: return None 
-            
+
+        if choice == 9:
+            return None
+
         movie_ids = get_all_movie_ids(movies_db)
 
         if 1 <= choice <= len(movie_ids):
@@ -138,7 +151,43 @@ def handle_edit_movie_selection(movies_db: MoviesDatabase) -> tuple[MoviesDataba
             clear_screen()
             movies_db = handle_movie_management(movies_db, movie_id)
             return movies_db, True
-        
+
+
+def handle_remove_movie_selection(
+    movies_db: MoviesDatabase,
+) -> tuple[MoviesDatabase, bool] | None:
+    movie_keys = list(movies_db.keys())
+
+    while True:
+        print("\n=== PELÍCULAS ACTUALES ===")
+        for i, key in enumerate(movie_keys, start=1):
+            title = movies_db[key].get("title", "Sin título")
+
+            print(f"{i}. {title} ({key})")
+            print("\n0. Salir sin eliminar")
+
+        option = custom_input(
+            "Seleccione el número de la película a eliminar: ",
+            int,
+            validator=lambda opt: (
+                (None, opt)
+                if 0 <= opt <= len(movie_keys)
+                else (f"Opción inválida. Seleccione entre 0 y {len(movie_keys)}.", None)
+            ),
+        )
+
+        if option == 0:
+            break
+
+        selected_key = movie_keys[option - 1]
+        title = movies_db[selected_key].get("title", "Sin título")
+
+        print(f"\n➡ Eliminando película: {title} ({selected_key})")
+        del movies_db[selected_key]
+
+        return movies_db, True
+
+
 def edit_classifications():
     classifications, err = read_json(CLASSIFICATION_PATH)
     if err:
@@ -165,16 +214,22 @@ def edit_classifications():
             print(f"Clasificación agregada con ID {new_key}")
 
         elif choice == "2":
-            edit_key = input("Ingrese el número de la clasificación a modificar: ").strip()
+            edit_key = input(
+                "Ingrese el número de la clasificación a modificar: "
+            ).strip()
             if edit_key in classifications:
-                new_value = input(f"Ingrese el nuevo texto para '{classifications[edit_key]}': ").strip()
+                new_value = input(
+                    f"Ingrese el nuevo texto para '{classifications[edit_key]}': "
+                ).strip()
                 classifications[edit_key] = new_value
                 print("Clasificación modificada con éxito.")
             else:
                 print("ID no válido.")
 
         elif choice == "3":
-            del_key = input("Ingrese el número de la clasificación a eliminar: ").strip()
+            del_key = input(
+                "Ingrese el número de la clasificación a eliminar: "
+            ).strip()
             if del_key in classifications:
                 del classifications[del_key]
                 print(" Clasificación eliminada.")
@@ -187,7 +242,8 @@ def edit_classifications():
             print("Opción inválida.")
 
     save_json(classifications, CLASSIFICATION_PATH)
-    
+
+
 def edit_category():
     categories, err = read_json(CATEGORY_PATH)
     if err:
@@ -216,7 +272,9 @@ def edit_category():
         elif choice == "2":
             edit_key = input("Ingrese el número de la categorias a modificar: ").strip()
             if edit_key in categories:
-                new_value = input(f"Ingrese el nuevo texto para '{categories[edit_key]}': ").strip()
+                new_value = input(
+                    f"Ingrese el nuevo texto para '{categories[edit_key]}': "
+                ).strip()
                 categories[edit_key] = new_value
                 print("categorias modificada con éxito.")
             else:
