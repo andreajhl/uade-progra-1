@@ -260,7 +260,7 @@ def validate_date_input(date_str: str) -> tuple[str | None, str | None]:
         if not (1 <= month <= 12):
             return ("Mes debe estar entre 1 y 12", None)
         if not (2025 <= year <= 2100):
-            return ("Año debe estar entre 1900 y 2100", None)
+            return ("Año debe estar entre 2025 y 2100", None)
         if not valid_day(day, month, year):
             return ("Día Invalido para el mes indicado", None)
 
