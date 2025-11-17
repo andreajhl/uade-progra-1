@@ -99,7 +99,7 @@ def handle_film_name_change(movies_db: MoviesDatabase, movie_id: str) -> MoviesD
     
     movie = get_movie_by_id(movies_db, movie_id)
     if movie:
-        write_log(f"Se modifico el titulo de la pelicula {movie["title"]} por {new_name}")
+        write_log(f"Se modifico el titulo de la pelicula por {new_name}")
         movies_db[movie_id] = {
             "title": new_name,
             "hall": movie["hall"],
