@@ -59,7 +59,7 @@ def display_movies_overview(movies_db) -> None:
     """Muestra resumen de todas las películas."""
     
     print("Catálogo de Películas:")
-    print("\nID \t Título \t\t Categoría \t\t\t Clasificación \t\t\t\t Horario")
+    print("\nID \t Título \t\t Categoría \t\t\t Clasificación \t\t\t\t Fecha")
     print("-" * 120)
     
     movie_ids = get_all_movie_ids(movies_db)
@@ -114,7 +114,7 @@ def display_filtered_movies(movies_list: list, title: str) -> None:
         print(f"{i} - Título: {title}")
         print(f"    Categoría: {category}")
         print(f"    Clasificación: {classification}")
-        print(f"    Horario: {movie['schedule']}")
+        print(f"    Fecha: {movie['schedule']}")
         print()
     
     print("9 - Volver al menú anterior")

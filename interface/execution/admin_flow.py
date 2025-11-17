@@ -100,7 +100,7 @@ def handle_create_movie(movies_db: MoviesDatabase) -> MoviesDatabase:
     print(f"\n✅ Película creada exitosamente: '{title}'")
     print(f"🎭 Categoría: {categories[category]}")
     print(f"🔞 Clasificación: {classifications[classification]}")
-    print(f"📅 Horario: {schedule}")
+    print(f"📅 Fecha: {schedule}")
     print(f"🆔 ID: {movie_id}")
     
     input("\n📌 Presione Enter para continuar...")

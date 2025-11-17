@@ -3,7 +3,7 @@ from tools.input.index import custom_input
 from tools.seats.index import get_coords_seat, get_free_seat
 from custom_types import CinemaHall
 from tools.movies.index import get_categories, get_classifications
-
+from tools.date.index import valid_day, split_date
 
 def get_admin_menu_choice_movies(movies_count: int) -> int:
     """Obtiene opción del menú de administrador."""
@@ -238,15 +238,14 @@ def get_movie_classification_input() -> str:
 
 
 def get_movie_schedule_input() -> str:
-    """Obtiene horario de película."""
-    print("\nIngrese el horario de función")
+    """Obtiene Fecha de película."""
+    print("\nIngrese la fecha de la función")
     
     return custom_input(
         "Fecha (formato DD/MM/AAAA): ",
         str,
         validator=lambda date_str: validate_date_input(date_str)
     )
-
 
 def validate_date_input(date_str: str) -> tuple[str | None, str | None]:
     """Valida formato de fecha."""
@@ -255,14 +254,14 @@ def validate_date_input(date_str: str) -> tuple[str | None, str | None]:
         if len(parts) != 3:
             return ("Formato incorrecto. Use DD/MM/AAAA", None)
         
-        day, month, year = map(int, parts)
+        day, month, year = split_date(date_str)
         
-        if not (1 <= day <= 31):
-            return ("Día debe estar entre 1 y 31", None)
         if not (1 <= month <= 12):
             return ("Mes debe estar entre 1 y 12", None)
         if not (1900 <= year <= 2100):
             return ("Año debe estar entre 1900 y 2100", None)
+        if not valid_day(day,month,year):
+            return ("Día Invalido para el mes indicado", None)
             
         formatted_date = f"{day:02d}/{month:02d}/{year}"
         return (None, formatted_date)
@@ -328,7 +327,7 @@ def get_complete_movie_data() -> dict:
     print(f"📽️  Título: {title}")
     print(f"🎭 Categoría: {categories[category]}")
     print(f"🔞 Clasificación: {classifications[classification]}")
-    print(f"📅 Horario: {schedule}")
+    print(f"📅 Fecha: {schedule}")
 
     return {
         "title": title,
